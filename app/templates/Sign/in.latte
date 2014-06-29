@@ -1,0 +1,30 @@
+{block title}- Přihlášení{/block}
+
+{block content}
+
+{foreach $presenter->getComponent('signInForm')->ownErrors as $error}
+	<div style="color:#D00;font-weight:bold">{$error}</div>
+{/foreach}
+
+{foreach $presenter->getComponent('signInForm')->controls as $input}
+	<div style="color:#D00;font-weight:bold" n:ifcontent="">{$input->error}</div>
+{/foreach}
+
+<p>
+	{form signInForm novalidate => 'novalidate'}
+		<table border="0">
+			<tr>
+				<td>Přihlašovací jméno:</td>
+				<td>{input username size => 20, class => 'input'}</td>
+			</tr>
+			<tr>
+				<td>Heslo:</td>
+				<td>{input password size => 20, class => 'input'}</td>
+			</tr>
+			<tr>
+				<td>&nbsp;</td>
+				<td>{input send class => 'input'}</td>
+			</tr>
+		</table>
+	{/form}
+</p>

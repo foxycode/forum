@@ -1,0 +1,45 @@
+{block title}- Vyhledávání{/block}
+
+{block content}
+	<form method="get" action="{link this}">
+		<span class="menu">Přihlášen: <b>{$user->getIdentity()->data['nick']}</b> |
+			<a n:href="Homepage:">Seznam příspěvků</a> |
+			<a n:href="Thread:new">Nový příspěvek</a> |
+			<a n:href="Setting:">Nastavení</a>
+			<select class="input" name="view" id="view" size="1" onchange="return filtr();">
+				<option value="all">Zobrazit vše</option>
+				<option value="unread"{*$view=~'unread' ? ' selected="selected"' : ''*}>Nepřečtené</option>
+			</select>
+			<input type="submit" value="&gt;" class="input"> |
+			<a n:href="Sign:out">Odhlásit</a>
+		</span>
+	</form>
+	<br />
+
+	<form method="get" action="{link this}">
+		<input type="text" id="q" name="q" value="{$q}" autocomplete="off" style="width:350px;border:1px solid black;color:red;" />
+		<button type="submit">Hledej</button>
+	</form>
+	<br />
+
+	<table cellspacing="1" cellpadding="1" border="0" width="100%">
+		<tr>
+			<td class="headers" width="34%">&nbsp;Předmět&nbsp;</td>
+			<td class="headers" width="27%">&nbsp;Autor&nbsp;</td>
+			<td class="headers center" width="5%"><abbr lang="cs" title="Počet odpoědí ve vlákně">#</abbr></td>
+			<td class="headers" width="16%">&nbsp;Založeno&nbsp;</td>
+			<td class="headers right" width="15%">&nbsp;Poslední příspěvek&nbsp;</td>
+		</tr>
+		{if $threads}
+			{foreach $threads as $thread}
+				<tr>
+					<td class="{if $iterator->even}itemss{else}itemsl{/if} {if $thread->replies_read == $thread->replies_count}read{else}unread{/if}" nowrap="nowrap"><a n:href="Thread: $thread->thread_id">&nbsp;{$thread->subject}</a></td>
+					<td class="{if $iterator->even}itemss{else}itemsl{/if} {if $thread->replies_read == $thread->replies_count}read{else}unread{/if}" nowrap="nowrap"><a n:href="Thread: $thread->thread_id">&nbsp;{$thread->submiter_name}</a></td>
+					<td class="{if $iterator->even}itemss{else}itemsl{/if} {if $thread->replies_read == $thread->replies_count}read{else}unread{/if} center" nowrap="nowrap"><a n:href="Thread: $thread->thread_id">&nbsp;{$thread->replies_count}</a></td>
+					<td class="{if $iterator->even}itemss{else}itemsl{/if} {if $thread->replies_read == $thread->replies_count}read{else}unread{/if}" nowrap="nowrap"><a n:href="Thread: $thread->thread_id">&nbsp;{$thread->create_time|date:'%H:%M %d.%m. %Y'}</a></td>
+					<td class="{if $iterator->even}itemss{else}itemsl{/if} {if $thread->replies_read == $thread->replies_count}read{else}unread{/if} right" nowrap="nowrap"><a href="{link Thread: $thread->thread_id}#{if $thread->replies_read < $thread->replies_count}new{else}{$thread->replies_count}{/if}">&nbsp;{$thread->last_reply_time|date:'%H:%M %d.%m. %Y'}&nbsp;<br /><span class="foot">napsal</span> {$thread->last_reply_by_name}&nbsp;</a></td>
+				</tr>
+			{/foreach}
+		{/if}
+	</table>
+{/block}

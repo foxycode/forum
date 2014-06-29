@@ -1,0 +1,83 @@
+{block title}- Nastavení{/block}
+
+{block content}
+	<span class="menu">
+		{if $presenter['userForm']->hasErrors()}
+			{foreach $presenter['userForm']->errors as $error}
+				<b>{$error}</b> |
+			{/foreach}
+		{/if}
+		<a n:href="Homepage:">Návrat do fóra</a>
+	</span>
+
+	<p>
+		{form userForm novalidate => 'novalidate'}
+			<table border="0">
+				<tr>
+					<td><b>Přezdívka:</b></td>
+					<td>{$nick}</td>
+				</tr>
+				<tr>
+					<td><b>Počet příspěvků:</b></td>
+					<td>
+						{input perpage}
+					</td>
+				</tr>
+				<tr>
+					<td valign="top"><b>Řadit podle:</b></td>
+					<td>
+						{input sortby}
+					</td>
+				</tr>
+				<tr>
+					<td><b>Staré heslo:</b></td>
+					<td>
+						{input oldPassword size => 40, class => 'input'} (nutné pro změnu údajů)
+					</td>
+				</tr>
+				<tr>
+					<td><b>Vzhled:</b></td>
+					<td>
+						{input style}
+					</td>
+				</tr>
+				<tr>
+					<td><b>E-mail:</b></td>
+					<td>
+						{input mail size => 40, class => 'input'}
+					</td>
+				</tr>
+				<tr>
+					<td><b>ICQ:</b></td>
+					<td>
+						{input icq size => 40, class => 'input'}
+					</td>
+				</tr>
+				<tr>
+					<td><b>Jabber:</b></td>
+					<td>
+						{input jabber size => 40, class => 'input'}
+					</td>
+				</tr>
+				<tr>
+					<td><b>Nové heslo:</b></td>
+					<td>
+						{input newPassword1 size => 40, class => 'input'}
+					</td>
+				</tr>
+				<tr>
+					<td><b>Kontrola:</b></td>
+					<td>
+						{input newPassword2 size => 40, class => 'input'}
+					</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td>
+						{input send class => 'input'}
+					</td>
+				</tr>
+			</table>
+		{/form}
+	</p>
+{/block}
