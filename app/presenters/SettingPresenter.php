@@ -81,6 +81,11 @@ class SettingPresenter extends BasePresenter
 		unset($values->newPassword1, $values->newPassword2);
 
 		$this->userManager->update($this->user->identity->id, $values);
+		$userData = $this->userManager->get($this->user->identity->id);
+
+		$this->user->login(
+			new Nette\Security\Identity($userData->user_id, NULL, $userData->toArray())
+		);
 
 		$form->addError('Údaje změněny');
 	}

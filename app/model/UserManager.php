@@ -48,6 +48,11 @@ class UserManager extends Nette\Object implements Nette\Security\IAuthenticator
 		return new Nette\Security\Identity($row['user_id'], NULL, $row->toArray());
 	}
 
+	public function get($userId)
+	{
+		return $this->database->table('user')->where('user_id', $userId)->fetch();
+	}
+
 	public function update($id, $values)
 	{
 		$this->database->table('user')->where('user_id', $id)->update($values);
