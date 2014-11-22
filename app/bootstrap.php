@@ -6,7 +6,10 @@ setlocale(LC_ALL, "Czech");
 
 $configurator = new Nette\Configurator;
 
-$configurator->setDebugMode(TRUE);  // debug mode MUST NOT be enabled on production server
+if (getenv('NETTE_DEVEL') == 1)
+{
+	$configurator->setDebugMode(TRUE);
+}
 $configurator->enableDebugger(__DIR__ . '/../log');
 
 $configurator->setTempDirectory(__DIR__ . '/../temp');
