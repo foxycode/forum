@@ -74,16 +74,17 @@ class ThreadPresenter extends BasePresenter
 			if ($this->getParameter('id'))
 			{
 				$values->thread_id = $thread_id = $this->getParameter('id');
-				$this->threadRepository->addMessage($values);
+				$replies = $this->threadRepository->addMessage($values);
 			}
 			else
 			{
 				$thread_id = $this->threadRepository->add($values);
+				$replies = 0;
 			}
 
 			$this->messageRepository->commit();
 
-			$this->redirect('default', $thread_id);
+			$this->redirect('default#'.$replies, $thread_id);
 		}
 	}
 
@@ -139,6 +140,11 @@ class ThreadPresenter extends BasePresenter
 
 	public function actionDefault($id)
 	{
+		if (!$id)
+		{
+			throw new BadRequestException('Příspěvek nebyl nalezen.');
+		}
+
 		$this->thread = $this->threadRepository->get(
 			$id, $this->getUser()->getIdentity()->id
 		);

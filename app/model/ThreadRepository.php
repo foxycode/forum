@@ -74,7 +74,7 @@ class ThreadRepository extends Repository
 	public function add($data)
 	{
 		$time = new \DateTime;
-		$this->database->table('thread')->insert(array(
+		$thread = $this->database->table('thread')->insert(array(
 			'submiter_id' => $data->submiter_id,
 			'subject' => stripslashes($data->subject),
 			'create_time' => $time,
@@ -82,25 +82,27 @@ class ThreadRepository extends Repository
 			'last_reply_by' => $data->submiter_id,
 			'replies_count' => 0
 		));
-		$thread_id = $this->database->getInsertId();
 		$this->database->table('message')->insert(array(
-			'thread_id' => $thread_id,
+			'thread_id' => $thread->thread_id,
 			'submiter_id' => $data->submiter_id,
 			'text' => $data->text,
 			'create_time' => $time
 		));
-		return $thread_id;
+		return $thread->thread_id;
 	}
 
 	public function addMessage($data)
 	{
 		$this->database->table('message')->insert($data);
-		$this->database->table('thread')->where('thread_id', $data->thread_id)
-			->update(array(
-				'last_reply_time' => new \DateTime,
-				'last_reply_by' => $data->submiter_id,
-				'replies_count' => new Nette\Database\SqlLiteral('replies_count + 1')
-			));
+
+		$thread = $this->database->table('thread')->get($data->thread_id);
+		$thread->update(array(
+			'last_reply_time' => new \DateTime,
+			'last_reply_by' => $data->submiter_id,
+			'replies_count' => $thread->replies_count + 1
+		));
+
+		return $thread->replies_count;
 	}
 
 	public function updateRead($thread, $userId)
