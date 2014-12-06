@@ -108,24 +108,22 @@ class ThreadPresenter extends BasePresenter
 		$body = str_replace("&lt;/b&gt;", "</b>", $body);
 		$body = str_replace("&lt;/i&gt;", "</i>", $body);
 		$body = str_replace("&lt;/u&gt;", "</u>", $body);
-		$body = str_replace("&lt;B&gt;", "<B>", $body);
-		$body = str_replace("&lt;I&gt;", "<I>", $body);
-		$body = str_replace("&lt;U&gt;", "<U>", $body);
-		$body = str_replace("&lt;/B&gt;", "</B>", $body);
-		$body = str_replace("&lt;/I&gt;", "</I>", $body);
-		$body = str_replace("&lt;/U&gt;", "</U>", $body);
+		$body = str_replace("&lt;B&gt;", "<b>", $body);
+		$body = str_replace("&lt;I&gt;", "<i>", $body);
+		$body = str_replace("&lt;U&gt;", "<u>", $body);
+		$body = str_replace("&lt;/B&gt;", "</b>", $body);
+		$body = str_replace("&lt;/I&gt;", "</i>", $body);
+		$body = str_replace("&lt;/U&gt;", "</u>", $body);
 
-		$body = preg_replace("~http://www([^ \n]+)~i", "<A HREF=\"http://www\\1\" TARGET=\"_blank\">hhtp://www\\1</A>", $body);
-		$body = preg_replace("~http://([^ \n]*)~i", "<A HREF=\"http://\\1\" TARGET=\"_blank\">http://\\1</A>", $body);
-		$body = preg_replace("~https://www([^ \n]+)~i", "<A HREF=\"https://www\\1\" TARGET=\"_blank\">hhtps://www\\1</A>", $body);
-		$body = preg_replace("~https://([^ \n]*)~i", "<A HREF=\"https://\\1\" TARGET=\"_blank\">https://\\1</A>", $body);
-		$body = preg_replace("~www\.([^ \n]*)~i", "<A HREF=\"http://www.\\1\" TARGET=\"_blank\">www.\\1</A>", $body);
+		$body = str_replace("www.", "http://www.", $body);
+		$body = str_replace("//http://", "//", $body);
+		$body = preg_replace("~http(s?)://([^ \n]*)~i", "<a href=\"http\\1://\\2\" target=\"_blank\">http\\1://\\2</a>", $body);
 
-		$body = preg_replace("~ftp://ftp([^ \n]*)~i", "<A HREF=\"ftp://ftp\\1\" TARGET=\"_blank\">ftp://ftp\\1</A>", $body);
-		$body = preg_replace("~ftp://([^ \n]*)~i", "<A HREF=\"ftp://\\1\" TARGET=\"_blank\">ftp://\\1</A>", $body);
-		$body = preg_replace("~ftp\.([^ \n]*)~i", "<A HREF=\"ftp://ftp.\\1\" TARGET=\"_blank\">ftp.\\1</A>", $body);
+		$body = str_replace("ftp.", "ftp://ftp.", $body);
+		$body = str_replace("//ftp://", "//", $body);
+		$body = preg_replace("~ftp://([^ \n]*)~i", "<a href=\"ftp://\\1\" target=\"_blank\">ftp://\\1</a>", $body);
 
-		$body = preg_replace("~mailto:([^ \n]*)~i", "<A HREF=\"mailto:\\1\">\\1</A>", $body);
+		$body = preg_replace("~mailto:([^ \n]*)~i", "<a href=\"mailto:\\1\">\\1</a>", $body);
 
 		for($z=1;$z<=1765;$z++) 
 		{
