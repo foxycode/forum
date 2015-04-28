@@ -76,7 +76,7 @@ class SettingPresenter extends BasePresenter
 		unset($values->oldPassword);
 		if ($values->newPassword1)
 		{
-			$values->password = $values->newPassword1;
+			$values->password = md5($values->newPassword1);
 		}
 		unset($values->newPassword1, $values->newPassword2);
 
