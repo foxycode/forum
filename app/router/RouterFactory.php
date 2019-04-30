@@ -19,6 +19,8 @@ class RouterFactory
 	 */
 	public function createRouter()
 	{
+		Route::$defaultFlags = Route::SECURED;
+
 		$router = new RouteList();
 
 		$router[] = new Route('thread/new', 'Thread:new');
