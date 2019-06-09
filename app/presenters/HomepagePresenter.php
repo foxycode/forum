@@ -22,16 +22,16 @@ final class HomepagePresenter extends BasePresenter
         $this->threadRepository = $threadRepository;
     }
 
-    public function actionDefault()
+    public function actionDefault(): void
     {
         $this->perpage = $this->user->identity->data['perpage'];
     }
 
-    public function actionSearch()
+    public function actionSearch(): void
     {
     }
 
-    public function renderDefault()
+    public function renderDefault(): void
     {
         $this->template->perpage = $this->perpage;
         $this->template->threads = $this->threadRepository->getLast(
@@ -41,7 +41,7 @@ final class HomepagePresenter extends BasePresenter
         );
     }
 
-    public function renderSearch()
+    public function renderSearch(): void
     {
         $this->template->q = $this->getParameter('q');
         $this->template->threads = $this->threadRepository->search(

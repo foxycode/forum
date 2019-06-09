@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Nette;
+use Nette\Database\Table\Selection;
 
 abstract class Repository
 {
@@ -18,65 +19,51 @@ abstract class Repository
         $this->database = $database;
     }
 
-    function uncamelize($camel, $splitter = "_")
+    function uncamelize(string $camel, string $splitter = "_"): string
     {
         $camel = preg_replace('/(?!^)[[:upper:]][[:lower:]]/', '$0', preg_replace('/(?!^)[[:upper:]]+/', $splitter.'$0', $camel));
         return strtolower($camel);
     }
 
-    /**
-     * @return Nette\Database\Table\Selection
-     */
-    protected function getTable()
+    protected function getTable(): Selection
     {
         // název tabulky odvodíme z názvu třídy
         preg_match('#(\w+)Repository$#', get_class($this), $m);
         return $this->database->table($this->uncamelize($m[1]));
     }
 
-    public function getCount()
+    public function getCount(): int
     {
         return $this->getTable()->count('*');
     }
 
-    /**
-     * @return Nette\Database\Table\Selection
-     */
-    public function findAll()
+    public function findAll(): Selection
     {
         return $this->getTable();
     }
 
-    /**
-     * @return Nette\Database\Table\Selection
-     */
-    public function findBy(array $by)
+    public function findBy(array $by): Selection
     {
         return $this->getTable()->where($by);
     }
 
-    public function insert($values)
+    public function insert($values): string
     {
         $this->getTable()->insert($values);
         return $this->database->getInsertId();
     }
 
-    public function update($id, $values)
-    {
-        $this->get($id)->update($values);
-    }
-
-    public function begin()
+    public function begin(): void
     {
         $this->database->beginTransaction();
     }
 
-    public function rollback()
+    public function rollback(): void
     {
         $this->database->rollback();
     }
 
-    public function commit()
+    public function commit(): void
     {
         $this->database->commit();
     }

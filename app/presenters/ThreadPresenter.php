@@ -4,9 +4,11 @@ namespace App\Presenters;
 
 use App\Model\MessageRepository;
 use App\Model\ThreadRepository;
-use Nette;
+use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
 use Nette\Application\BadRequestException;
+use Nette\Database\Row;
+use Nette\Utils\ArrayHash;
 
 final class ThreadPresenter extends BasePresenter
 {
@@ -21,7 +23,7 @@ final class ThreadPresenter extends BasePresenter
     private $threadRepository;
 
     /**
-     * @var Nette\Database\Row
+     * @var Row
      */
     private $thread;
 
@@ -32,11 +34,11 @@ final class ThreadPresenter extends BasePresenter
         $this->threadRepository = $threadRepository;
     }
 
-    protected function createComponentMessageForm()
+    protected function createComponentMessageForm(): Form
     {
         $form = new Form();
 
-        if ($this->getParameter('action') == 'new')
+        if ($this->getParameter('action') === 'new')
         {
             $form->addText('subject', 'Předmět')
                 ->addRule(Form::MAX_LENGTH, 'Maximální povolená délka předmětu je %d znaků.', 42)
@@ -54,17 +56,20 @@ final class ThreadPresenter extends BasePresenter
         return $form;
     }
 
-    public function messageFormSuccess(Form $form)
+    /**
+     * @throws BadRequestException
+     * @throws AbortException
+     */
+    public function messageFormSuccess(Form $form, ArrayHash $values): void
     {
         if ($this->getParameter('id') && !$this->thread)
         {
             throw new BadRequestException('Příspěvek nebyl nalezen.');
         }
 
-        $values = $form->getValues();
         $values->text = $this->processMessageBody($values->text);
 
-        if ($form->isSubmitted()->name == 'preview')
+        if ($form->isSubmitted()->name === 'preview')
         {
             $values->nick = $this->getUser()->getIdentity()->data['nick'];
             $values->mail = $this->getUser()->getIdentity()->data['mail'];
@@ -97,7 +102,7 @@ final class ThreadPresenter extends BasePresenter
         }
     }
 
-    public function messageFormError($form)
+    public function messageFormError(Form $form): void
     {
         foreach ($form->getErrors() as $error)
         {
@@ -105,7 +110,7 @@ final class ThreadPresenter extends BasePresenter
         }
     }
 
-    private function processMessageBody($body)
+    private function processMessageBody(string $body): string
     {
         $body = htmlspecialchars(stripslashes($body));
         $body = str_replace("&amp;", "&", $body);
@@ -141,16 +146,18 @@ final class ThreadPresenter extends BasePresenter
         return $body;
     }
 
-    public function actionDefault($id)
+    /**
+     * @throws BadRequestException
+     */
+    public function actionDefault(int $id): void
     {
-        if (!$id)
-        {
-            throw new BadRequestException('Příspěvek nebyl nalezen.');
-        }
-
         $this->thread = $this->threadRepository->get(
             $id, $this->getUser()->getIdentity()->id
         );
+        if (!$this->thread)
+        {
+            throw new BadRequestException('Příspěvek nebyl nalezen.');
+        }
 
         $this->threadRepository->updateRead($this->thread, $this->getUser()->getIdentity()->id);
 
@@ -160,7 +167,10 @@ final class ThreadPresenter extends BasePresenter
         }
     }
 
-    public function actionReply($id)
+    /**
+     * @throws BadRequestException
+     */
+    public function actionReply(int $id): void
     {
         $this->thread = $this->threadRepository->get(
             $id, $this->getUser()->getIdentity()->id
@@ -172,23 +182,23 @@ final class ThreadPresenter extends BasePresenter
         }
     }
 
-    public function actionNew()
+    public function actionNew(): void
     {
     }
 
-    public function renderDefault($id)
+    public function renderDefault(int $id): void
     {
         $this->template->thread = $this->thread;
         $this->template->messages = $this->messageRepository->getByThreadId($id);
-        $this->template->preview = $this->getParameter('preview') == 'yes' ? TRUE : FALSE;
+        $this->template->preview = $this->getParameter('preview') === 'yes' ? TRUE : FALSE;
     }
 
-    public function renderReply($id)
+    public function renderReply(): void
     {
         $this->template->thread = $this->thread;
     }
 
-    public function renderNew()
+    public function renderNew(): void
     {
         $this->template->showSubject = TRUE;
     }

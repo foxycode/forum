@@ -10,10 +10,7 @@ final class RouterFactory
 {
     use StaticClass;
 
-    /**
-     * @return \Nette\Application\IRouter
-     */
-    public static function createRouter()
+    public static function createRouter(): RouteList
     {
         $router = new RouteList();
 

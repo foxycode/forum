@@ -2,37 +2,46 @@
 
 namespace App\Model;
 
-use Nette;
+use Nette\Database\Context;
+use Nette\Database\Table\ActiveRow;
+use Nette\Security\AuthenticationException;
+use Nette\Security\IAuthenticator;
+use Nette\Security\Identity;
+use Nette\Security\IIdentity;
+use Nette\SmartObject;
+use Nette\Utils\ArrayHash;
 
-final class UserManager implements Nette\Security\IAuthenticator
+final class UserManager implements IAuthenticator
 {
-    use Nette\SmartObject;
+    use SmartObject;
 
     /**
-     * @var Nette\Database\Context
+     * @var Context
      */
     private $database;
 
-    public function __construct(Nette\Database\Context $database)
+    public function __construct(Context $database)
     {
         $this->database = $database;
     }
 
     /**
-     * @return Nette\Security\Identity
-     * @throws Nette\Security\AuthenticationException
+     * @param string[] $credentials
+     *
+     * @return Identity
+     * @throws AuthenticationException
      */
-    public function authenticate(array $credentials)
+    public function authenticate(array $credentials): IIdentity
     {
         list($username, $password) = $credentials;
 
         $row = $this->database->table('user')->where('nick', $username)->fetch();
 
         if (!$row) {
-            throw new Nette\Security\AuthenticationException('Špatné uživatelské jméno.', self::IDENTITY_NOT_FOUND);
+            throw new AuthenticationException('Špatné uživatelské jméno.', self::IDENTITY_NOT_FOUND);
 
         } elseif (md5($password) != $row['password']) {
-            throw new Nette\Security\AuthenticationException('Špatné heslo.', self::INVALID_CREDENTIAL);
+            throw new AuthenticationException('Špatné heslo.', self::INVALID_CREDENTIAL);
 
         }
 
@@ -40,15 +49,15 @@ final class UserManager implements Nette\Security\IAuthenticator
             ->where('user_id', $row->user_id)
             ->update(array('last_login' => new \DateTime));
 
-        return new Nette\Security\Identity($row['user_id'], NULL, $row->toArray());
+        return new Identity($row['user_id'], NULL, $row->toArray());
     }
 
-    public function get($userId)
+    public function get(int $userId): ?ActiveRow
     {
-        return $this->database->table('user')->where('user_id', $userId)->fetch();
+        return $this->database->table('user')->where('user_id', $userId)->fetch() ?: NULL;
     }
 
-    public function update($id, $values)
+    public function update(int $id, ArrayHash $values): void
     {
         $this->database->table('user')->where('user_id', $id)->update($values);
     }

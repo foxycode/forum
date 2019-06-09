@@ -2,9 +2,13 @@
 
 namespace App\Model;
 
+use Nette\Database\ResultSet;
+use Nette\Database\Row;
+use Nette\Utils\ArrayHash;
+
 final class ThreadRepository extends Repository
 {
-    public function get($id, $userId)
+    public function get(int $id, int $userId): ?Row
     {
         $result = $this->database->query("
             SELECT
@@ -16,10 +20,10 @@ final class ThreadRepository extends Repository
             LIMIT 1
         ");
 
-        return $result->fetch();
+        return $result->fetch() ?: NULL;
     }
 
-    public function getLast($userId, $sortBy, $perPage)
+    public function getLast(int $userId, string $sortBy, int $perPage): ResultSet
     {
         $result = $this->database->query("SELECT DISTINCT
                 thread.*,
@@ -37,7 +41,7 @@ final class ThreadRepository extends Repository
         return $result;
     }
 
-    public function search($query, $sortBy, $perPage)
+    public function search(?string $query, string $sortBy, int $perPage): ?ResultSet
     {
         $result = NULL;
 
@@ -64,7 +68,7 @@ final class ThreadRepository extends Repository
         return $result;
     }
 
-    public function add($data)
+    public function add(ArrayHash $data): int
     {
         $time = new \DateTime;
         $thread = $this->database->table('thread')->insert(array(
@@ -84,7 +88,7 @@ final class ThreadRepository extends Repository
         return $thread->thread_id;
     }
 
-    public function addMessage($data)
+    public function addMessage(ArrayHash $data): int
     {
         $this->database->table('message')->insert($data);
 
@@ -98,7 +102,7 @@ final class ThreadRepository extends Repository
         return $thread->replies_count;
     }
 
-    public function updateRead($thread, $userId)
+    public function updateRead(Row $thread, int $userId): void
     {
         if ($thread->replies_read === NULL)
         {

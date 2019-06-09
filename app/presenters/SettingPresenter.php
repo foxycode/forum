@@ -5,6 +5,7 @@ namespace App\Presenters;
 use App\Model\UserManager;
 use Nette\Application\UI\Form;
 use Nette\Security\Identity;
+use Nette\Utils\ArrayHash;
 
 final class SettingPresenter extends BasePresenter
 {
@@ -19,7 +20,7 @@ final class SettingPresenter extends BasePresenter
         $this->userManager = $userManager;
     }
 
-    protected function createComponentUserForm()
+    protected function createComponentUserForm(): Form
     {
         $form = new Form();
 
@@ -73,10 +74,8 @@ final class SettingPresenter extends BasePresenter
         return $form;
     }
 
-    public function userFormSuccess(Form $form)
+    public function userFormSuccess(Form $form, ArrayHash $values): void
     {
-        $values = $form->getValues();
-
         unset($values->oldPassword);
         if ($values->newPassword1)
         {
@@ -94,7 +93,7 @@ final class SettingPresenter extends BasePresenter
         $form->addError('Údaje změněny');
     }
 
-    public function renderDefault($id)
+    public function renderDefault(): void
     {
         $this->template->nick = $this->user->identity->data['nick'];
     }

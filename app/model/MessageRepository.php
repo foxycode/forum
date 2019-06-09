@@ -2,9 +2,11 @@
 
 namespace App\Model;
 
+use Nette\Database\ResultSet;
+
 final class MessageRepository extends Repository
 {
-    public function getByThreadId($id)
+    public function getByThreadId(int $id): ResultSet
     {
         $result = $this->database->query("
             SELECT *

@@ -3,15 +3,14 @@
 namespace App\Presenters;
 
 use Nette;
+use Nette\Application\UI\Form;
+use Nette\Utils\ArrayHash;
 
 final class SignPresenter extends Nette\Application\UI\Presenter
 {
-    /**
-     * @return Nette\Application\UI\Form
-     */
-    protected function createComponentSignInForm()
+    protected function createComponentSignInForm(): Form
     {
-        $form = new Nette\Application\UI\Form;
+        $form = new Form;
         $form->addText('username', 'Přihlašovací jméno:')
             ->setRequired('Zadej uživatelské jméno.');
 
@@ -24,7 +23,7 @@ final class SignPresenter extends Nette\Application\UI\Presenter
         return $form;
     }
 
-    public function signInFormSucceeded($form, $values)
+    public function signInFormSucceeded(Form $form, ArrayHash $values): void
     {
         try {
             $this->getUser()->login($values->username, $values->password);
@@ -36,7 +35,10 @@ final class SignPresenter extends Nette\Application\UI\Presenter
         }
     }
 
-    public function actionOut()
+    /**
+     * @throws Nette\Application\AbortException
+     */
+    public function actionOut(): void
     {
         $this->getUser()->logout();
         $this->getSession()->destroy();

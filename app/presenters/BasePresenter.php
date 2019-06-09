@@ -9,7 +9,7 @@ abstract class BasePresenter extends Nette\Application\UI\Presenter
     /**
      * @throws Nette\Application\AbortException
      */
-    protected function startup()
+    protected function startup(): void
     {
         parent::startup();
 
