@@ -3,35 +3,35 @@
 {block content}
 
 {foreach $presenter->getComponent('signInForm')->ownErrors as $error}
-	<div style="color:#D00;font-weight:bold">{$error}</div>
+    <div style="color:#D00;font-weight:bold">{$error}</div>
 {/foreach}
 
 {foreach $presenter->getComponent('signInForm')->controls as $input}
-	<div style="color:#D00;font-weight:bold" n:ifcontent="">{$input->error}</div>
+    <div style="color:#D00;font-weight:bold" n:ifcontent="">{$input->error}</div>
 {/foreach}
 
 <p>
-	Forum nyní jede kvůli přesunu na novější PHP na nové aplikaci.
-	Kvůli tomu bohužel nebylo možné zachovat sessions přihlášených
-	uživatelů. Pokud si nevzpomínáte na své heslo nebo se vám nejde
-	přihlásit, ozvěte se mi na mailu tomik&#64;olmik.net.
+    Forum nyní jede kvůli přesunu na novější PHP na nové aplikaci.
+    Kvůli tomu bohužel nebylo možné zachovat sessions přihlášených
+    uživatelů. Pokud si nevzpomínáte na své heslo nebo se vám nejde
+    přihlásit, ozvěte se mi na mailu tomik&#64;olmik.net.
 </p>
 
 <p>
-	{form signInForm novalidate => 'novalidate'}
-		<table border="0">
-			<tr>
-				<td>Přihlašovací jméno:</td>
-				<td>{input username size => 20, class => 'input'}</td>
-			</tr>
-			<tr>
-				<td>Heslo:</td>
-				<td>{input password size => 20, class => 'input'}</td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td>{input send class => 'input'}</td>
-			</tr>
-		</table>
-	{/form}
+    {form signInForm novalidate => 'novalidate'}
+        <table border="0">
+            <tr>
+                <td>Přihlašovací jméno:</td>
+                <td>{input username size => 20, class => 'input'}</td>
+            </tr>
+            <tr>
+                <td>Heslo:</td>
+                <td>{input password size => 20, class => 'input'}</td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>{input send class => 'input'}</td>
+            </tr>
+        </table>
+    {/form}
 </p>

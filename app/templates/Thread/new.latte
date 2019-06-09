@@ -1,50 +1,50 @@
 {block title}- Nový příspěvek{/block}
 
 {block content}
-	<span class="menu">
-		<a n:href="Homepage:">Návrat do fóra</a>
-	</span>
+    <span class="menu">
+        <a n:href="Homepage:">Návrat do fóra</a>
+    </span>
 
-	{if isset($preview)}
-		<p>
-			{var iterator = new stdClass}
-			{php $iterator->counter = 1}
-			{include '../common/message.latte' message => $preview, iterator => $iterator}
-		</p>
-	{/if}
+    {if isset($preview)}
+        <p>
+            {var iterator = new stdClass}
+            {php $iterator->counter = 1}
+            {include '../common/message.latte' message => $preview, iterator => $iterator}
+        </p>
+    {/if}
 
-	<p>
-		{form messageForm novalidate => 'novalidate'}
-			{if isset($r)}
-				{input r}
-			{/if}
-			<table border="0">
-				<tr>
-					<td><b>Přezdívka:</b></td>
-					<td>{$user->getIdentity()->data['nick']}</td>
-				</tr>
-				{if isset($showSubject)}
-				<tr>
-					<td><b>Předmět:</b></td>
-					<td>
-						{input subject size => 42, class => 'input'}
-					</td>
-				</tr>
-				{/if}
-				<tr>
-					<td style="vertical-align:top;"><b>Zpráva:</b></td>
-					<td>
-						{input text cols => 100, rows => 12, class => 'input'}
-					</td>
-				</tr>
-				<tr>
-					<td>&nbsp;</td>
-					<td>
-						{input preview class => 'input'}
-						{input submit class => 'input'}
-					</td>
-				</tr>
-			</table>
-		{/form}
-	</p>
+    <p>
+        {form messageForm novalidate => 'novalidate'}
+            {if isset($r)}
+                {input r}
+            {/if}
+            <table border="0">
+                <tr>
+                    <td><b>Přezdívka:</b></td>
+                    <td>{$user->getIdentity()->data['nick']}</td>
+                </tr>
+                {if isset($showSubject)}
+                <tr>
+                    <td><b>Předmět:</b></td>
+                    <td>
+                        {input subject size => 42, class => 'input'}
+                    </td>
+                </tr>
+                {/if}
+                <tr>
+                    <td style="vertical-align:top;"><b>Zpráva:</b></td>
+                    <td>
+                        {input text cols => 100, rows => 12, class => 'input'}
+                    </td>
+                </tr>
+                <tr>
+                    <td>&nbsp;</td>
+                    <td>
+                        {input preview class => 'input'}
+                        {input submit class => 'input'}
+                    </td>
+                </tr>
+            </table>
+        {/form}
+    </p>
 {/block}

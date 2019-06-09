@@ -1,30 +1,30 @@
 {block title}- [{$thread->subject}]{/block}
 
 {block content}
-	{if !$preview}
-		<span class="menu">
-			<a n:href="Homepage:">Návrat do fóra</a> |
-			<a n:href="Thread:reply $thread->thread_id">Vložit odpověd</a> |
-			<a n:href="Thread: $thread->thread_id + 1">Novější</a> |
-			<a n:href="Thread: $thread->thread_id - 1">Starší</a>
-		</span>
-		<p></p>
-	{/if}
+    {if !$preview}
+        <span class="menu">
+            <a n:href="Homepage:">Návrat do fóra</a> |
+            <a n:href="Thread:reply $thread->thread_id">Vložit odpověd</a> |
+            <a n:href="Thread: $thread->thread_id + 1">Novější</a> |
+            <a n:href="Thread: $thread->thread_id - 1">Starší</a>
+        </span>
+        <p></p>
+    {/if}
 
-	<hr noshade align="left" size="1">
+    <hr noshade align="left" size="1">
 
-	{foreach $messages as $message}
-		{include '../common/message.latte' message => $message, iterator => $iterator}
-	{/foreach}
+    {foreach $messages as $message}
+        {include '../common/message.latte' message => $message, iterator => $iterator}
+    {/foreach}
 
-	{if !$preview}
-		<span class="menu">
-			<a n:href="Homepage:">Návrat do fóra</a> |
-			<a n:href="Thread:reply $thread->thread_id">Vložit odpověd</a> |
-			<a n:href="Thread: $thread->thread_id + 1">Novější</a> |
-			<a n:href="Thread: $thread->thread_id - 1">Starší</a>
-		</span>
-	{else}
-		Toto je náhled zprávy, do které vkládáte odpověd.
-	{/if}
+    {if !$preview}
+        <span class="menu">
+            <a n:href="Homepage:">Návrat do fóra</a> |
+            <a n:href="Thread:reply $thread->thread_id">Vložit odpověd</a> |
+            <a n:href="Thread: $thread->thread_id + 1">Novější</a> |
+            <a n:href="Thread: $thread->thread_id - 1">Starší</a>
+        </span>
+    {else}
+        Toto je náhled zprávy, do které vkládáte odpověd.
+    {/if}
 {/block}

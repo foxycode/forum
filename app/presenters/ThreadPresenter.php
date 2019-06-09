@@ -3,191 +3,181 @@
 namespace App\Presenters;
 
 use Nette,
-	Nette\Application\UI\Form,
-	Nette\Application\BadRequestException;
-
+    Nette\Application\UI\Form,
+    Nette\Application\BadRequestException;
 
 /**
  * Thread presenter.
  */
 class ThreadPresenter extends BasePresenter
 {
-	/** @var \App\Model\ThreadRepository @inject */
-	public $threadRepository;
+    /** @var \App\Model\ThreadRepository @inject */
+    public $threadRepository;
 
-	/** @var \App\Model\MessageRepository @inject */
-	public $messageRepository;
+    /** @var \App\Model\MessageRepository @inject */
+    public $messageRepository;
 
-	/** @var Nette\Database\Row */
-	private $thread;
+    /** @var Nette\Database\Row */
+    private $thread;
 
-	// -------------------------------------------------------------------------
+    protected function createComponentMessageForm()
+    {
+        $form = new Form();
 
-	protected function createComponentMessageForm()
-	{
-		$form = new Form();
+        if ($this->getParameter('action') == 'new')
+        {
+            $form->addText('subject', 'Předmět')
+                ->addRule(Form::MAX_LENGTH, 'Maximální povolená délka předmětu je %d znaků.', 42)
+                ->addRule(Form::FILLED, 'Je nutné vyplnit předmět.');
+        }
 
-		if ($this->getParameter('action') == 'new')
-		{
-			$form->addText('subject', 'Předmět')
-				->addRule(Form::MAX_LENGTH, 'Maximální povolená délka předmětu je %d znaků.', 42)
-				->addRule(Form::FILLED, 'Je nutné vyplnit předmět.');
-		}
+        $form->addTextarea('text', 'Zpráva')
+            ->addRule(Form::FILLED, 'Je nutné vyplnit zprávu.');
 
-		$form->addTextarea('text', 'Zpráva')
-			->addRule(Form::FILLED, 'Je nutné vyplnit zprávu.');
+        $form->addSubmit('preview', 'Náhled');
+        $form->addSubmit('submit', 'Odeslat zprávu');
 
-		$form->addSubmit('preview', 'Náhled');
-		$form->addSubmit('submit', 'Odeslat zprávu');
+        $form->onSuccess[] = array($this, 'messageFormSuccess');
+        $form->onError[] = array($this,'messageFormError');
+        return $form;
+    }
 
-		$form->onSuccess[] = array($this, 'messageFormSuccess');
-		$form->onError[] = array($this,'messageFormError');
-		return $form;
-	}
+    public function messageFormSuccess(Form $form)
+    {
+        if ($this->getParameter('id') && !$this->thread)
+        {
+            throw new BadRequestException('Příspěvek nebyl nalezen.');
+        }
 
-	public function messageFormSuccess(Form $form)
-	{
-		if ($this->getParameter('id') && !$this->thread)
-		{
-			throw new BadRequestException('Příspěvek nebyl nalezen.');
-		}
+        $values = $form->getValues();
+        $values->text = $this->processMessageBody($values->text);
 
-		$values = $form->getValues();
-		$values->text = $this->processMessageBody($values->text);
+        if ($form->isSubmitted()->name == 'preview')
+        {
+            $values->nick = $this->getUser()->getIdentity()->data['nick'];
+            $values->mail = $this->getUser()->getIdentity()->data['mail'];
+            $values->icq = $this->getUser()->getIdentity()->data['icq'];
+            $values->jabber = $this->getUser()->getIdentity()->data['jabber'];
+            $values->create_time = new \DateTime;
+            $this->template->preview = $values;
+        }
+        else
+        {
+            $this->messageRepository->begin();
 
-		if ($form->isSubmitted()->name == 'preview')
-		{
-			$values->nick = $this->getUser()->getIdentity()->data['nick'];
-			$values->mail = $this->getUser()->getIdentity()->data['mail'];
-			$values->icq = $this->getUser()->getIdentity()->data['icq'];
-			$values->jabber = $this->getUser()->getIdentity()->data['jabber'];
-			$values->create_time = new \DateTime;
-			$this->template->preview = $values;
-		}
-		else
-		{
-			$this->messageRepository->begin();
+            $values->submiter_id = $this->getUser()->getIdentity()->id;
+            $values->create_time = new \DateTime;
 
-			$values->submiter_id = $this->getUser()->getIdentity()->id;
-			$values->create_time = new \DateTime;
+            if ($this->getParameter('id'))
+            {
+                $values->thread_id = $thread_id = $this->getParameter('id');
+                $replies = $this->threadRepository->addMessage($values);
+            }
+            else
+            {
+                $thread_id = $this->threadRepository->add($values);
+                $replies = 0;
+            }
 
-			if ($this->getParameter('id'))
-			{
-				$values->thread_id = $thread_id = $this->getParameter('id');
-				$replies = $this->threadRepository->addMessage($values);
-			}
-			else
-			{
-				$thread_id = $this->threadRepository->add($values);
-				$replies = 0;
-			}
+            $this->messageRepository->commit();
 
-			$this->messageRepository->commit();
+            $this->redirect('default#'.$replies, $thread_id);
+        }
+    }
 
-			$this->redirect('default#'.$replies, $thread_id);
-		}
-	}
+    public function messageFormError($form)
+    {
+        foreach ($form->getErrors() as $error)
+        {
+            $this->flashMessage($error);
+        }
+    }
 
-	public function messageFormError($form)
-	{
-		foreach ($form->getErrors() as $error)
-		{
-			$this->flashMessage($error);
-		}
-	}
+    private function processMessageBody($body)
+    {
+        $body = htmlspecialchars(stripslashes($body));
+        $body = str_replace("&amp;", "&", $body);
+        $body = str_replace("&lt;b&gt;", "<b>", $body);
+        $body = str_replace("&lt;i&gt;", "<i>", $body);
+        $body = str_replace("&lt;u&gt;", "<u>", $body);
+        $body = str_replace("&lt;/b&gt;", "</b>", $body);
+        $body = str_replace("&lt;/i&gt;", "</i>", $body);
+        $body = str_replace("&lt;/u&gt;", "</u>", $body);
+        $body = str_replace("&lt;B&gt;", "<b>", $body);
+        $body = str_replace("&lt;I&gt;", "<i>", $body);
+        $body = str_replace("&lt;U&gt;", "<u>", $body);
+        $body = str_replace("&lt;/B&gt;", "</b>", $body);
+        $body = str_replace("&lt;/I&gt;", "</i>", $body);
+        $body = str_replace("&lt;/U&gt;", "</u>", $body);
 
-	// -------------------------------------------------------------------------
+        $body = str_replace("www.", "http://www.", $body);
+        $body = str_replace("//http://", "//", $body);
+        $body = preg_replace("~http(s?)://([^ \n]*)~i", "<a href=\"http\\1://\\2\" target=\"_blank\">http\\1://\\2</a>", $body);
 
-	private function processMessageBody($body)
-	{
-		$body = htmlspecialchars(stripslashes($body));
-		$body = str_replace("&amp;", "&", $body);
-		$body = str_replace("&lt;b&gt;", "<b>", $body);
-		$body = str_replace("&lt;i&gt;", "<i>", $body);
-		$body = str_replace("&lt;u&gt;", "<u>", $body);
-		$body = str_replace("&lt;/b&gt;", "</b>", $body);
-		$body = str_replace("&lt;/i&gt;", "</i>", $body);
-		$body = str_replace("&lt;/u&gt;", "</u>", $body);
-		$body = str_replace("&lt;B&gt;", "<b>", $body);
-		$body = str_replace("&lt;I&gt;", "<i>", $body);
-		$body = str_replace("&lt;U&gt;", "<u>", $body);
-		$body = str_replace("&lt;/B&gt;", "</b>", $body);
-		$body = str_replace("&lt;/I&gt;", "</i>", $body);
-		$body = str_replace("&lt;/U&gt;", "</u>", $body);
+        $body = str_replace("ftp.", "ftp://ftp.", $body);
+        $body = str_replace("//ftp://", "//", $body);
+        $body = preg_replace("~ftp://([^ \n]*)~i", "<a href=\"ftp://\\1\" target=\"_blank\">ftp://\\1</a>", $body);
 
-		$body = str_replace("www.", "http://www.", $body);
-		$body = str_replace("//http://", "//", $body);
-		$body = preg_replace("~http(s?)://([^ \n]*)~i", "<a href=\"http\\1://\\2\" target=\"_blank\">http\\1://\\2</a>", $body);
+        $body = preg_replace("~mailto:([^ \n]*)~i", "<a href=\"mailto:\\1\">\\1</a>", $body);
 
-		$body = str_replace("ftp.", "ftp://ftp.", $body);
-		$body = str_replace("//ftp://", "//", $body);
-		$body = preg_replace("~ftp://([^ \n]*)~i", "<a href=\"ftp://\\1\" target=\"_blank\">ftp://\\1</a>", $body);
+        for($z=1;$z<=1765;$z++)
+        {
+            $body = str_replace("*$z*", "<img src=\"http://img.xchat.centrum.cz/images/x4/sm/"
+                                    . (substr($z,strlen($z)-2,2)+0) . "/$z.gif\" alt=\"*$z*\" />", $body);
+        }
 
-		$body = preg_replace("~mailto:([^ \n]*)~i", "<a href=\"mailto:\\1\">\\1</a>", $body);
+        return $body;
+    }
 
-		for($z=1;$z<=1765;$z++) 
-		{
-			$body = str_replace("*$z*", "<img src=\"http://img.xchat.centrum.cz/images/x4/sm/"
-									. (substr($z,strlen($z)-2,2)+0) . "/$z.gif\" alt=\"*$z*\" />", $body);
-		}
+    public function actionDefault($id)
+    {
+        if (!$id)
+        {
+            throw new BadRequestException('Příspěvek nebyl nalezen.');
+        }
 
-		return $body;
-	}
+        $this->thread = $this->threadRepository->get(
+            $id, $this->getUser()->getIdentity()->id
+        );
 
-	// -------------------------------------------------------------------------
+        $this->threadRepository->updateRead($this->thread, $this->getUser()->getIdentity()->id);
 
-	public function actionDefault($id)
-	{
-		if (!$id)
-		{
-			throw new BadRequestException('Příspěvek nebyl nalezen.');
-		}
+        if (!$this->thread)
+        {
+            throw new BadRequestException('Příspěvek nebyl nalezen.');
+        }
+    }
 
-		$this->thread = $this->threadRepository->get(
-			$id, $this->getUser()->getIdentity()->id
-		);
+    public function actionReply($id)
+    {
+        $this->thread = $this->threadRepository->get(
+            $id, $this->getUser()->getIdentity()->id
+        );
 
-		$this->threadRepository->updateRead($this->thread, $this->getUser()->getIdentity()->id);
+        if (!$this->thread)
+        {
+            throw new BadRequestException('Příspěvek nebyl nalezen.');
+        }
+    }
 
-		if (!$this->thread)
-		{
-			throw new BadRequestException('Příspěvek nebyl nalezen.');
-		}
-	}
+    public function actionNew()
+    {
+    }
 
-	public function actionReply($id)
-	{
-		$this->thread = $this->threadRepository->get(
-			$id, $this->getUser()->getIdentity()->id
-		);
+    public function renderDefault($id)
+    {
+        $this->template->thread = $this->thread;
+        $this->template->messages = $this->messageRepository->getByThreadId($id);
+        $this->template->preview = $this->getParameter('preview') == 'yes' ? TRUE : FALSE;
+    }
 
-		if (!$this->thread)
-		{
-			throw new BadRequestException('Příspěvek nebyl nalezen.');
-		}
-	}
+    public function renderReply($id)
+    {
+        $this->template->thread = $this->thread;
+    }
 
-	public function actionNew()
-	{
-	}
-
-	// -------------------------------------------------------------------------
-
-	public function renderDefault($id)
-	{
-		$this->template->thread = $this->thread;
-		$this->template->messages = $this->messageRepository->getByThreadId($id);
-		$this->template->preview = $this->getParameter('preview') == 'yes' ? TRUE : FALSE;
-	}
-
-	public function renderReply($id)
-	{
-		$this->template->thread = $this->thread;
-	}
-
-	public function renderNew()
-	{
-		$this->template->showSubject = TRUE;
-	}
-
+    public function renderNew()
+    {
+        $this->template->showSubject = TRUE;
+    }
 }

@@ -1,44 +1,44 @@
 <a name="{$iterator->counter - 1}"></a>
 {if isset($thread) && $thread->replies_read == $iterator->counter - 2}
-	<a name="new"></a>
+    <a name="new"></a>
 {/if}
 
 <table cellspacing="0" cellpadding="0" class="message">
-	<tr>
-		<td class="autor">
-			<b>{$message->nick}</b>
-			{if $message->mail}
-				<br />
-				<a href="mailto:{$message->mail}" class="foot">{$message->mail}</a>
-			{/if}
-			<br />
-			<div class="foot{if isset($thread) && $thread->replies_read <= $iterator->counter - 2} new{/if}">
-				{if $iterator->counter == 1}
-					Původní zpráva
-				{else}
-					Odpověď č. {$iterator->counter - 1}
-				{/if}
-			</div>
-			<br />
-			<span class="foot">{$message->create_time|date:'%H:%M %d.%m.%Y'}</span>
-			{if $message->icq}
-				<p><span class="foot"><img src="http://wwp.icq.com/scripts/online.dll?icq={$message->icq}&amp;img=5" width="17" alt="(o)" />{$message->icq}</span></p>
-			{/if}
-			{if $message->jabber}
-				<br />
-				<span class="foot"><img src="http://netlab.cz/status/?jid={$message->jabber}&amp;ib=psi" alt="Jabber" />{$message->jabber}</span>
-			{/if}
-		</td>
-		<td class="blackline"></td>
-		<td class="zprava">
-			<pre>{$message->text|noescape}</pre>
-		</td>
-	</tr>
-	<tr>
-		<td class="autor menu center foot"><a href="#top">Na začátek</a> | <a href="#end">Na konec</a></td>
-		<td class="blackline"></td>
-		<td class="zprava menu right foot"><a href="{if isset($thread)}{link Thread:reply $thread->thread_id}?r={$iterator->counter - 1}{/if}">Vložit odpověď</a></td>
-	</tr>
+    <tr>
+        <td class="autor">
+            <b>{$message->nick}</b>
+            {if $message->mail}
+                <br />
+                <a href="mailto:{$message->mail}" class="foot">{$message->mail}</a>
+            {/if}
+            <br />
+            <div class="foot{if isset($thread) && $thread->replies_read <= $iterator->counter - 2} new{/if}">
+                {if $iterator->counter == 1}
+                    Původní zpráva
+                {else}
+                    Odpověď č. {$iterator->counter - 1}
+                {/if}
+            </div>
+            <br />
+            <span class="foot">{$message->create_time|date:'%H:%M %d.%m.%Y'}</span>
+            {if $message->icq}
+                <p><span class="foot"><img src="http://wwp.icq.com/scripts/online.dll?icq={$message->icq}&amp;img=5" width="17" alt="(o)" />{$message->icq}</span></p>
+            {/if}
+            {if $message->jabber}
+                <br />
+                <span class="foot"><img src="http://netlab.cz/status/?jid={$message->jabber}&amp;ib=psi" alt="Jabber" />{$message->jabber}</span>
+            {/if}
+        </td>
+        <td class="blackline"></td>
+        <td class="zprava">
+            <pre>{$message->text|noescape}</pre>
+        </td>
+    </tr>
+    <tr>
+        <td class="autor menu center foot"><a href="#top">Na začátek</a> | <a href="#end">Na konec</a></td>
+        <td class="blackline"></td>
+        <td class="zprava menu right foot"><a href="{if isset($thread)}{link Thread:reply $thread->thread_id}?r={$iterator->counter - 1}{/if}">Vložit odpověď</a></td>
+    </tr>
 </table>
 
 <hr noshade align="left" size="1" />
