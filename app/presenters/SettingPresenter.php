@@ -5,7 +5,7 @@ namespace App\Presenters;
 use Nette;
 use Nette\Application\UI\Form;
 
-class SettingPresenter extends BasePresenter
+final class SettingPresenter extends BasePresenter
 {
     /**
      * @var \App\Model\UserManager

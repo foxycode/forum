@@ -4,7 +4,7 @@ namespace App\Presenters;
 
 use Nette;
 
-class SignPresenter extends Nette\Application\UI\Presenter
+final class SignPresenter extends Nette\Application\UI\Presenter
 {
     /**
      * @return Nette\Application\UI\Form

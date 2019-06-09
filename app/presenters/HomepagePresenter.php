@@ -4,7 +4,7 @@ namespace App\Presenters;
 
 use App\Model\ThreadRepository;
 
-class HomepagePresenter extends BasePresenter
+final class HomepagePresenter extends BasePresenter
 {
     /**
      * @var ThreadRepository

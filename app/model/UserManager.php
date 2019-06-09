@@ -4,7 +4,7 @@ namespace App\Model;
 
 use Nette;
 
-class UserManager implements Nette\Security\IAuthenticator
+final class UserManager implements Nette\Security\IAuthenticator
 {
     use Nette\SmartObject;
 

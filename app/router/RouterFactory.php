@@ -4,9 +4,12 @@ namespace App\Router;
 
 use Nette\Application\Routers\Route;
 use Nette\Application\Routers\RouteList;
+use Nette\StaticClass;
 
-class RouterFactory
+final class RouterFactory
 {
+    use StaticClass;
+
     /**
      * @return \Nette\Application\IRouter
      */

@@ -2,7 +2,7 @@
 
 namespace App\Model;
 
-class ThreadRepository extends Repository
+final class ThreadRepository extends Repository
 {
     public function get($id, $userId)
     {
