@@ -11,21 +11,26 @@ use Nette\Application\BadRequestException;
 final class ThreadPresenter extends BasePresenter
 {
     /**
-     * @var ThreadRepository
-     * @inject
+     * @var MessageRepository
      */
-    public $threadRepository;
+    private $messageRepository;
 
     /**
-     * @var MessageRepository
-     * @inject
+     * @var ThreadRepository
      */
-    public $messageRepository;
+    private $threadRepository;
 
     /**
      * @var Nette\Database\Row
      */
     private $thread;
+
+    public function __construct(MessageRepository $messageRepository, ThreadRepository $threadRepository)
+    {
+        parent::__construct();
+        $this->messageRepository = $messageRepository;
+        $this->threadRepository = $threadRepository;
+    }
 
     protected function createComponentMessageForm()
     {

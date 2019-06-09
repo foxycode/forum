@@ -8,14 +8,19 @@ final class HomepagePresenter extends BasePresenter
 {
     /**
      * @var ThreadRepository
-     * @inject
      */
-    public $threadRepository;
+    private $threadRepository;
 
     /**
      * @var int
      */
     private $perpage;
+
+    public function __construct(ThreadRepository $threadRepository)
+    {
+        parent::__construct();
+        $this->threadRepository = $threadRepository;
+    }
 
     public function actionDefault()
     {

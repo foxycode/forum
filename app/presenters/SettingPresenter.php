@@ -2,16 +2,22 @@
 
 namespace App\Presenters;
 
-use Nette;
+use App\Model\UserManager;
 use Nette\Application\UI\Form;
+use Nette\Security\Identity;
 
 final class SettingPresenter extends BasePresenter
 {
     /**
-     * @var \App\Model\UserManager
-     * @inject
+     * @var UserManager
      */
-    public $userManager;
+    private $userManager;
+
+    public function __construct(UserManager $userManager)
+    {
+        parent::__construct();
+        $this->userManager = $userManager;
+    }
 
     protected function createComponentUserForm()
     {
@@ -82,7 +88,7 @@ final class SettingPresenter extends BasePresenter
         $userData = $this->userManager->get($this->user->identity->id);
 
         $this->user->login(
-            new Nette\Security\Identity($userData->user_id, NULL, $userData->toArray())
+            new Identity($userData->user_id, NULL, $userData->toArray())
         );
 
         $form->addError('Údaje změněny');
