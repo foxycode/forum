@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Presenters;
 
@@ -140,7 +140,7 @@ final class ThreadPresenter extends BasePresenter
         for($z=1;$z<=1765;$z++)
         {
             $body = str_replace("*$z*", "<img src=\"http://img.xchat.centrum.cz/images/x4/sm/"
-                                    . (substr($z,strlen($z)-2,2)+0) . "/$z.gif\" alt=\"*$z*\" />", $body);
+                                    . (substr((string) $z,strlen((string) $z)-2,2)+0) . "/$z.gif\" alt=\"*$z*\" />", $body);
         }
 
         return $body;
