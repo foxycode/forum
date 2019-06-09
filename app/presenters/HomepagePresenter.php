@@ -2,9 +2,6 @@
 
 namespace App\Presenters;
 
-use Nette,
-    App\Model;
-
 /**
  * Homepage presenter.
  */

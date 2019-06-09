@@ -2,8 +2,6 @@
 
 namespace App\Model;
 
-use Nette;
-
 /**
  * Message management.
  */

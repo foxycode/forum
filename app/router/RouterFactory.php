@@ -2,10 +2,8 @@
 
 namespace App\Router;
 
-use Nette,
-    Nette\Application\Routers\RouteList,
-    Nette\Application\Routers\Route,
-    Nette\Application\Routers\SimpleRouter;
+use Nette\Application\Routers\Route;
+use Nette\Application\Routers\RouteList;
 
 /**
  * Router factory.

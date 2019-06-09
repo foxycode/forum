@@ -2,9 +2,9 @@
 
 namespace App\Presenters;
 
-use Nette,
-    Nette\Application\UI\Form,
-    Nette\Application\BadRequestException;
+use Nette;
+use Nette\Application\UI\Form;
+use Nette\Application\BadRequestException;
 
 /**
  * Thread presenter.
