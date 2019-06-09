@@ -1,0 +1,6 @@
+#!/bin/bash
+
+rm -fr temp/*
+composer dump-autoload
+
+vendor/bin/ecs check app bin

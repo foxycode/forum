@@ -9,7 +9,7 @@ Usage: create-user.php <name> <password>
     exit(1);
 }
 
-list(, $user, $password) = $_SERVER['argv'];
+[, $user, $password] = $_SERVER['argv'];
 
 $container = require __DIR__ . '/../app/bootstrap.php';
 $container->getByType(App\Model\UserManager::class)->add($user, $password);
