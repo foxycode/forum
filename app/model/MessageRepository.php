@@ -2,9 +2,6 @@
 
 namespace App\Model;
 
-/**
- * Message management.
- */
 class MessageRepository extends Repository
 {
     public function getByThreadId($id)

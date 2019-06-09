@@ -2,15 +2,19 @@
 
 namespace App\Presenters;
 
-/**
- * Homepage presenter.
- */
+use App\Model\ThreadRepository;
+
 class HomepagePresenter extends BasePresenter
 {
-    /** @var \App\Model\ThreadRepository @inject */
+    /**
+     * @var ThreadRepository
+     * @inject
+     */
     public $threadRepository;
 
-    /** @var int Zaznamu na stranku */
+    /**
+     * @var int
+     */
     private $perpage;
 
     public function actionDefault()

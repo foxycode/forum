@@ -2,22 +2,29 @@
 
 namespace App\Presenters;
 
+use App\Model\MessageRepository;
+use App\Model\ThreadRepository;
 use Nette;
 use Nette\Application\UI\Form;
 use Nette\Application\BadRequestException;
 
-/**
- * Thread presenter.
- */
 class ThreadPresenter extends BasePresenter
 {
-    /** @var \App\Model\ThreadRepository @inject */
+    /**
+     * @var ThreadRepository
+     * @inject
+     */
     public $threadRepository;
 
-    /** @var \App\Model\MessageRepository @inject */
+    /**
+     * @var MessageRepository
+     * @inject
+     */
     public $messageRepository;
 
-    /** @var Nette\Database\Row */
+    /**
+     * @var Nette\Database\Row
+     */
     private $thread;
 
     protected function createComponentMessageForm()

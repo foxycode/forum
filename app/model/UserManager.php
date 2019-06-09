@@ -4,14 +4,13 @@ namespace App\Model;
 
 use Nette;
 
-/**
- * Users management.
- */
 class UserManager implements Nette\Security\IAuthenticator
 {
     use Nette\SmartObject;
 
-    /** @var Nette\Database\Context */
+    /**
+     * @var Nette\Database\Context
+     */
     private $database;
 
     public function __construct(Nette\Database\Context $database)
@@ -20,7 +19,6 @@ class UserManager implements Nette\Security\IAuthenticator
     }
 
     /**
-     * Performs an authentication.
      * @return Nette\Security\Identity
      * @throws Nette\Security\AuthenticationException
      */
@@ -54,18 +52,4 @@ class UserManager implements Nette\Security\IAuthenticator
     {
         $this->database->table('user')->where('user_id', $id)->update($values);
     }
-
-    /**
-     * Adds new user.
-     * @param  string
-     * @param  string
-     * @return void
-     */
-    // public function add($username, $password)
-    // {
-    //     $this->database->table(self::TABLE_NAME)->insert(array(
-    //         self::COLUMN_NAME => $username,
-    //         self::COLUMN_PASSWORD_HASH => md5($password),
-    //     ));
-    // }
 }

@@ -2,9 +2,6 @@
 
 namespace App\Model;
 
-/**
- * Thread management.
- */
 class ThreadRepository extends Repository
 {
     public function get($id, $userId)

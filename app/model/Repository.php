@@ -4,17 +4,14 @@ namespace App\Model;
 
 use Nette;
 
-/**
- * Base repository.
- */
 abstract class Repository
 {
     use Nette\SmartObject;
 
-    /** @var Nette\Database\Context */
+    /**
+     * @var Nette\Database\Context
+     */
     protected $database;
-
-    // -------------------------------------------------------------------------
 
     public function __construct(Nette\Database\Context $database)
     {
@@ -28,7 +25,6 @@ abstract class Repository
     }
 
     /**
-     * Vrací objekt reprezentující databázovou tabulku.
      * @return Nette\Database\Table\Selection
      */
     protected function getTable()
@@ -44,7 +40,6 @@ abstract class Repository
     }
 
     /**
-     * Vrací všechny řádky z tabulky.
      * @return Nette\Database\Table\Selection
      */
     public function findAll()
@@ -53,22 +48,12 @@ abstract class Repository
     }
 
     /**
-     * Vrací řádky podle filtru, např. array('name' => 'John').
      * @return Nette\Database\Table\Selection
      */
     public function findBy(array $by)
     {
         return $this->getTable()->where($by);
     }
-
-    /**
-     * Vrací záznam podle primárního klíče
-     * @return Nette\Database\Table\Row
-     */
-    // public function get($id)
-    // {
-    // 	return $this->getTable()->find($id)->fetch();
-    // }
 
     public function insert($values)
     {

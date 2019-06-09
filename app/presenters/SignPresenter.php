@@ -4,13 +4,9 @@ namespace App\Presenters;
 
 use Nette;
 
-/**
- * Sign in/out presenters.
- */
 class SignPresenter extends Nette\Application\UI\Presenter
 {
     /**
-     * Sign-in form factory.
      * @return Nette\Application\UI\Form
      */
     protected function createComponentSignInForm()

@@ -5,12 +5,12 @@ namespace App\Presenters;
 use Nette;
 use Nette\Application\UI\Form;
 
-/**
- * Setting presenter.
- */
 class SettingPresenter extends BasePresenter
 {
-    /** @var \App\Model\UserManager @inject */
+    /**
+     * @var \App\Model\UserManager
+     * @inject
+     */
     public $userManager;
 
     protected function createComponentUserForm()
