@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Router;
 
 use Nette,
 	Nette\Application\Routers\RouteList,
@@ -17,10 +17,8 @@ class RouterFactory
 	/**
 	 * @return \Nette\Application\IRouter
 	 */
-	public function createRouter()
+	public static function createRouter()
 	{
-		Route::$defaultFlags = Route::SECURED;
-
 		$router = new RouteList();
 
 		$router[] = new Route('thread/new', 'Thread:new');

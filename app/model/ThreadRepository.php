@@ -50,7 +50,7 @@ class ThreadRepository extends Repository
 		
 		if ($query)
 		{
-			$query = trim($this->database->connection->quote($query), "'");
+			$query = trim($this->database->getConnection()->quote($query), "'");
 			$query = str_replace('*', '%', "%{$query}%");
 
 			$result = $this->database->query("SELECT DISTINCT

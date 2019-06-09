@@ -42,6 +42,7 @@ class SettingPresenter extends BasePresenter
 			->addRule(Form::FILLED, 'Je nutné vybrat řazení');
 
 		$form->addPassword('oldPassword', 'Staré heslo')
+			->setRequired(TRUE)
 			->addRule(function ($item, $arg) {
 				return md5($item->value) == $arg;
 			}, 'Je nutné zadat platné heslo', $this->user->identity->data['password']);
@@ -58,6 +59,7 @@ class SettingPresenter extends BasePresenter
 		$form->addText('jabber', 'Jabber');
 		$form->addPassword('newPassword1', 'Nové heslo');
 		$form->addPassword('newPassword2', 'Kontrola')
+			->setRequired(FALSE)
 			->addConditionOn($form['newPassword1'], Form::FILLED)
 				->addRule(Form::EQUAL, 'Hesla se neshodují', $form['newPassword1']);
 

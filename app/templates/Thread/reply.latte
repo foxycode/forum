@@ -8,7 +8,7 @@
 	{if isset($preview)}
 		<p>
 			{var iterator = new stdClass}
-			{? $iterator->counter = 1}
+			{php $iterator->counter = 1}
 			{include '../common/message.latte' message => $preview, iterator => $iterator}
 		</p>
 	{/if}

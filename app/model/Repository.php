@@ -8,8 +8,10 @@ use Nette;
 /**
  * Base repository.
  */
-abstract class Repository extends Nette\Object
+abstract class Repository
 {
+	use Nette\SmartObject;
+
 	/** @var Nette\Database\Context */
 	protected $database;
 
