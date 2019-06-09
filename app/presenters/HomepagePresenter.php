@@ -11,11 +11,6 @@ final class HomepagePresenter extends BasePresenter
      */
     private $threadRepository;
 
-    /**
-     * @var int
-     */
-    private $perpage;
-
     public function __construct(ThreadRepository $threadRepository)
     {
         parent::__construct();
@@ -24,7 +19,6 @@ final class HomepagePresenter extends BasePresenter
 
     public function actionDefault(): void
     {
-        $this->perpage = $this->user->identity->data['perpage'];
     }
 
     public function actionSearch(): void
@@ -33,21 +27,21 @@ final class HomepagePresenter extends BasePresenter
 
     public function renderDefault(): void
     {
-        $this->template->perpage = $this->perpage;
+        $this->template->perpage = $this->getUser()->getIdentity()->perpage;
         $this->template->threads = $this->threadRepository->getLast(
             $this->getUser()->getIdentity()->id,
-            $this->getUser()->getIdentity()->data['sortby'],
-            $this->getUser()->getIdentity()->data['perpage']
+            $this->getUser()->getIdentity()->sortby,
+            $this->getUser()->getIdentity()->perpage
         );
     }
 
-    public function renderSearch(): void
+    public function renderSearch(?string $q): void
     {
-        $this->template->q = $this->getParameter('q');
+        $this->template->q = $q;
         $this->template->threads = $this->threadRepository->search(
-            $this->getParameter('q'),
-            $this->getUser()->getIdentity()->data['sortby'],
-            $this->getUser()->getIdentity()->data['perpage']
+            $q,
+            $this->getUser()->getIdentity()->sortby,
+            $this->getUser()->getIdentity()->perpage
         );
     }
 }

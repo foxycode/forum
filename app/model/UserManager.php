@@ -33,21 +33,21 @@ final class UserManager implements IAuthenticator
      */
     public function authenticate(array $credentials): IIdentity
     {
-        list($username, $password) = $credentials;
+        [$username, $password] = $credentials;
 
         $row = $this->database->table('user')->where('nick', $username)->fetch();
 
         if (!$row) {
             throw new AuthenticationException('Špatné uživatelské jméno.', self::IDENTITY_NOT_FOUND);
+        }
 
-        } elseif (md5($password) != $row['password']) {
+        if (md5($password) != $row['password']) {
             throw new AuthenticationException('Špatné heslo.', self::INVALID_CREDENTIAL);
-
         }
 
         $this->database->table('user')
             ->where('user_id', $row->user_id)
-            ->update(array('last_login' => new \DateTime));
+            ->update(['last_login' => new \DateTime]);
 
         return new Identity($row['user_id'], NULL, $row->toArray());
     }

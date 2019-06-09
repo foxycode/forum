@@ -45,8 +45,7 @@ final class ThreadRepository extends Repository
     {
         $result = NULL;
 
-        if ($query)
-        {
+        if ($query) {
             $query = trim($this->database->getConnection()->quote($query), "'");
             $query = str_replace('*', '%', "%{$query}%");
 
@@ -71,20 +70,22 @@ final class ThreadRepository extends Repository
     public function add(ArrayHash $data): int
     {
         $time = new \DateTime;
-        $thread = $this->database->table('thread')->insert(array(
+        $thread = $this->database->table('thread')->insert([
             'submiter_id' => $data->submiter_id,
             'subject' => stripslashes($data->subject),
             'create_time' => $time,
             'last_reply_time' => $time,
             'last_reply_by' => $data->submiter_id,
-            'replies_count' => 0
-        ));
-        $this->database->table('message')->insert(array(
+            'replies_count' => 0,
+        ]);
+
+        $this->database->table('message')->insert([
             'thread_id' => $thread->thread_id,
             'submiter_id' => $data->submiter_id,
             'text' => $data->text,
-            'create_time' => $time
-        ));
+            'create_time' => $time,
+        ]);
+
         return $thread->thread_id;
     }
 
@@ -93,33 +94,32 @@ final class ThreadRepository extends Repository
         $this->database->table('message')->insert($data);
 
         $thread = $this->database->table('thread')->get($data->thread_id);
-        $thread->update(array(
+        $thread->update([
             'last_reply_time' => new \DateTime,
             'last_reply_by' => $data->submiter_id,
-            'replies_count' => $thread->replies_count + 1
-        ));
+            'replies_count' => $thread->replies_count + 1,
+        ]);
 
         return $thread->replies_count;
     }
 
     public function updateRead(Row $thread, int $userId): void
     {
-        if ($thread->replies_read === NULL)
-        {
-            $this->database->table('read')->insert(array(
+        if ($thread->replies_read === NULL) {
+            $this->database->table('read')->insert([
                 'user_id' => $userId,
                 'thread_id' => $thread->thread_id,
-                'replies' => $thread->replies_count
-            ));
+                'replies' => $thread->replies_count,
+            ]);
         }
-        elseif ($thread->replies_count > $thread->replies_read)
-        {
+
+        if ($thread->replies_count > $thread->replies_read) {
             $this->database->table('read')
                 ->where('user_id', $userId)
                 ->where('thread_id', $thread->thread_id)
-                ->update(array(
-                    'replies' => $thread->replies_count
-                ));
+                ->update([
+                    'replies' => $thread->replies_count,
+                ]);
         }
     }
 }

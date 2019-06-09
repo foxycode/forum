@@ -3,6 +3,7 @@
 namespace App\Model;
 
 use Nette;
+use Nette\Database\Context;
 use Nette\Database\Table\Selection;
 
 abstract class Repository
@@ -10,19 +11,22 @@ abstract class Repository
     use Nette\SmartObject;
 
     /**
-     * @var Nette\Database\Context
+     * @var Context
      */
     protected $database;
 
-    public function __construct(Nette\Database\Context $database)
+    public function __construct(Context $database)
     {
         $this->database = $database;
     }
 
-    function uncamelize(string $camel, string $splitter = "_"): string
+    public function uncamelize(string $camel, string $splitter = '_'): string
     {
-        $camel = preg_replace('/(?!^)[[:upper:]][[:lower:]]/', '$0', preg_replace('/(?!^)[[:upper:]]+/', $splitter.'$0', $camel));
-        return strtolower($camel);
+        return strtolower(preg_replace(
+            '/(?!^)[[:upper:]][[:lower:]]/',
+            '$0',
+            preg_replace('/(?!^)[[:upper:]]+/', $splitter . '$0', $camel)
+        ));
     }
 
     protected function getTable(): Selection
@@ -47,7 +51,7 @@ abstract class Repository
         return $this->getTable()->where($by);
     }
 
-    public function insert($values): string
+    public function insert(array $values): string
     {
         $this->getTable()->insert($values);
         return $this->database->getInsertId();

@@ -3,6 +3,7 @@
 namespace App\Presenters;
 
 use Nette;
+use Nette\Application\AbortException;
 use Nette\Application\UI\Form;
 use Nette\Utils\ArrayHash;
 
@@ -23,20 +24,22 @@ final class SignPresenter extends Nette\Application\UI\Presenter
         return $form;
     }
 
+    /**
+     * @throws AbortException
+     */
     public function signInFormSucceeded(Form $form, ArrayHash $values): void
     {
         try {
             $this->getUser()->login($values->username, $values->password);
             $this->getUser()->setExpiration(0, FALSE);
             $this->redirect('Homepage:');
-
         } catch (Nette\Security\AuthenticationException $e) {
             $form->addError($e->getMessage());
         }
     }
 
     /**
-     * @throws Nette\Application\AbortException
+     * @throws AbortException
      */
     public function actionOut(): void
     {

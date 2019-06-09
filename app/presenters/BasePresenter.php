@@ -2,19 +2,19 @@
 
 namespace App\Presenters;
 
-use Nette;
+use Nette\Application\AbortException;
+use Nette\Application\UI\Presenter;
 
-abstract class BasePresenter extends Nette\Application\UI\Presenter
+abstract class BasePresenter extends Presenter
 {
     /**
-     * @throws Nette\Application\AbortException
+     * @throws AbortException
      */
     protected function startup(): void
     {
         parent::startup();
 
-        if (!$this->user->isLoggedIn())
-        {
+        if (!$this->user->isLoggedIn()) {
             $this->redirect('Sign:in');
         }
     }

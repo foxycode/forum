@@ -22,9 +22,9 @@ final class SettingPresenter extends BasePresenter
 
     protected function createComponentUserForm(): Form
     {
-        $form = new Form();
+        $form = new Form;
 
-        $perpage = array(
+        $perpage = [
             25 => 25,
             50 => 50,
             75 => 75,
@@ -32,15 +32,15 @@ final class SettingPresenter extends BasePresenter
             125 => 125,
             150 => 150,
             175 => 175,
-            200 => 200
-        );
+            200 => 200,
+        ];
         $form->addSelect('perpage', 'Počet příspěvků', $perpage)
             ->addRule(Form::FILLED, 'Je nutné vybrat počet příspěvků');
 
-        $sortby = array(
+        $sortby = [
             'last_reply_time' => 'Času poslední odpovědi',
-            'create_time' => 'Času vytvoření'
-        );
+            'create_time' => 'Času vytvoření',
+        ];
         $form->addSelect('sortby', 'Řadit podle', $sortby)
             ->addRule(Form::FILLED, 'Je nutné vybrat řazení');
 
@@ -50,10 +50,10 @@ final class SettingPresenter extends BasePresenter
                 return md5($item->value) == $arg;
             }, 'Je nutné zadat platné heslo', $this->user->identity->data['password']);
 
-        $style = array(
+        $style = [
             'forum.css' => 'Světle modrý',
-            'forum_d.css' => 'Tmavě modrý'
-        );
+            'forum_d.css' => 'Tmavě modrý',
+        ];
         $form->addSelect('style', 'Vzhled', $style)
             ->addRule(Form::FILLED, 'Je nutné vybrat vzhled');
 
@@ -68,33 +68,31 @@ final class SettingPresenter extends BasePresenter
 
         $form->addSubmit('send', 'Uložit');
 
-        $form->setDefaults($this->user->identity->data);
+        $form->setDefaults($this->getUser()->getIdentity()->data);
 
-        $form->onSuccess[] = array($this, 'userFormSuccess');
+        $form->onSuccess[] = [$this, 'userFormSuccess'];
+
         return $form;
     }
 
     public function userFormSuccess(Form $form, ArrayHash $values): void
     {
         unset($values->oldPassword);
-        if ($values->newPassword1)
-        {
+        if ($values->newPassword1) {
             $values->password = md5($values->newPassword1);
         }
         unset($values->newPassword1, $values->newPassword2);
 
         $this->userManager->update($this->user->identity->id, $values);
-        $userData = $this->userManager->get($this->user->identity->id);
+        $userData = $this->userManager->get($this->getUser()->getIdentity()->getId());
 
-        $this->user->login(
-            new Identity($userData->user_id, NULL, $userData->toArray())
-        );
+        $this->user->login(new Identity($userData->user_id, NULL, $userData->toArray()));
 
         $form->addError('Údaje změněny');
     }
 
     public function renderDefault(): void
     {
-        $this->template->nick = $this->user->identity->data['nick'];
+        $this->template->nick = $this->getUser()->getIdentity()->nick;
     }
 }
