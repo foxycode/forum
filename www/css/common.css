@@ -110,7 +110,8 @@ th, td {
 }
 
 .message {
-    color: inherit;
+    display: table;
+    font-size: 0.95em;
     padding: 0;
     margin: 2px;
     min-width: 780px;
@@ -118,14 +119,37 @@ th, td {
     border-spacing: 0;
 }
 
-.autor {
+.message-row {
+    display: table-row;
+}
+
+.message-author {
+    display: table-cell;
     width: 123px;
     min-width: 123px;
     padding: 2px;
     vertical-align: top;
 }
 
-.zprava {
+.message-author strong {
+    display: block;
+    margin-bottom: 0.5em;
+}
+
+.message-author ul {
+    list-style: none;
+    margin: 1em 0;
+    padding: 0;
+    font-size: 78%;
+    line-height: 2em;
+}
+
+.message-author li img {
+    vertical-align: middle;
+}
+
+.message-body {
+    display: table-cell;
     padding: 0 0 0 10px;
     vertical-align: top;
     min-width: 760px;
@@ -208,6 +232,49 @@ pre {
     }
     .threads th, td {
         white-space: normal;
+    }
+
+    .message {
+        display: block;
+        min-width: auto;
+    }
+    .message-row {
+        display: block;
+    }
+    .message-author {
+        display: block;
+        min-width: auto;
+        width: auto;
+    }
+    .message-author strong {
+        display: inline;
+        margin: 0;
+    }
+    .message-author div {
+        float: right;
+        margin: 2px 2px 0 2em;
+        text-align: right;
+    }
+    .message-author div:nth-of-type(1) {
+        min-width: 80px;
+    }
+    .message-author ul {
+        display: none;
+    }
+    .message-row.nav .message-author {
+        background: none;
+        text-align: left !important;
+        float: left;
+        padding-bottom: 0.6em;
+    }
+    .message-body {
+        display: block;
+        min-width: auto;
+        width: auto;
+        padding: 0.5em 2px;
+    }
+    .message-row.nav .message-body {
+        float: right;
     }
 }
 

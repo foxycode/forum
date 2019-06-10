@@ -3,15 +3,11 @@
     <a id="new"></a>
 {/if}
 
-<table class="message">
-    <tr>
-        <td class="autor">
-            <b>{$message->nick}</b>
-            {if $message->mail}
-                <br>
-                <a href="mailto:{$message->mail}" class="small">{$message->mail}</a>
-            {/if}
-            <br>
+<div class="message">
+    <div class="message-row">
+        <div class="message-author">
+            <strong>{$message->nick}</strong>
+
             <div class="small{if isset($thread) && $thread->replies_read <= $iterator->counter - 2} new{/if}">
                 {if $iterator->counter == 1}
                     Původní zpráva
@@ -19,22 +15,20 @@
                     Odpověď č. {$iterator->counter - 1}
                 {/if}
             </div>
-            <br>
-            <span class="small">{$message->create_time|date:'%H:%M %d.%m.%Y'}</span>
-            {if $message->icq}
-                <p><span class="small"><img src="http://wwp.icq.com/scripts/online.dll?icq={$message->icq}&amp;img=5" width="17" alt="(o)"> {$message->icq}</span></p>
-            {/if}
-            {if $message->jabber}
-                <br>
-                <span class="small"><img src="http://netlab.cz/status/?jid={$message->jabber}&amp;ib=psi" alt="Jabber">{$message->jabber}</span>
-            {/if}
-        </td>
-        <td class="zprava">
+            <div class="small">{$message->create_time|date:'%H:%M %d.%m.%Y'}</div>
+
+            <ul>
+                <li n:if="$message->mail"><a href="mailto:{$message->mail}" class="small">{$message->mail}</a></li>
+                <li n:if="$message->icq"><img src="http://wwp.icq.com/scripts/online.dll?icq={$message->icq}&amp;img=5" width="17" alt="(o)"> {$message->icq}</li>
+                <li n:if="$message->jabber"><img src="http://netlab.cz/status/?jid={$message->jabber}&amp;ib=psi" alt="Jabber">{$message->jabber}</li>
+            </ul>
+        </div>
+        <div class="message-body">
             <pre>{$message->text|noescape}</pre>
-        </td>
-    </tr>
-    <tr>
-        <td class="autor menu center small"><a href="#top">Na začátek</a> | <a href="#end">Na konec</a></td>
-        <td class="zprava menu right small"><a href="{if isset($thread)}{link Thread:reply $thread->thread_id}?r={$iterator->counter - 1}{/if}">Vložit odpověď</a></td>
-    </tr>
-</table>
+        </div>
+    </div>
+    <div class="message-row nav">
+        <div class="message-author center small"><a href="#top">Na začátek</a> | <a href="#end">Na konec</a></div>
+        <div class="message-body right small"><a href="{if isset($thread)}{link Thread:reply $thread->thread_id}?r={$iterator->counter - 1}{/if}">Vložit odpověď</a></div>
+    </div>
+</div>
