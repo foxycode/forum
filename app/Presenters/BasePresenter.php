@@ -19,7 +19,7 @@ abstract class BasePresenter extends Presenter
     {
         parent::startup();
 
-        if (!$this->user->isLoggedIn()) {
+        if (!$this->user->isLoggedIn() && $this->name !== 'Sign') {
             $this->redirect('Sign:in');
         }
     }
@@ -28,6 +28,7 @@ abstract class BasePresenter extends Presenter
     {
         parent::beforeRender();
 
-        $this->template->theme = self::THEMES[$this->getUser()->getIdentity()->style] ?? 'green';
+        $style = $this->getUser()->getIdentity() ? $this->getUser()->getIdentity()->style : 'green';
+        $this->template->theme = self::THEMES[$style] ?? 'green';
     }
 }

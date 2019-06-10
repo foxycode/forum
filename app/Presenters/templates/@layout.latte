@@ -1,34 +1,32 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="cs">
 <head>
     <title>Diskuzní fórum{ifset #title} {include title|striptags}{/ifset}</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="robots" content="noindex,nofollow" />
-    <meta name="googlebot" content="noindex,nofollow,nosnippet,noarchive" />
-    <link rel="stylesheet" type="text/css" href="{$basePath}/css/theme-{$theme}.css" media="screen" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow,nosnippet,noarchive">
+    <link rel="stylesheet" type="text/css" href="{$basePath}/css/theme-{$theme}.css" media="screen">
     <link rel="shortcut icon" href="{$basePath}/favicon.ico" type="image/x-icon">
     <link rel="icon" href="{$basePath}/favicon.ico" type="image/x-icon">
 </head>
 <body>
 
-<a name="top"></a>
-
-<h1><img src="{$basePath}/images/rss.gif" width="16" height="16" border="0" alt="[F]">&nbsp;Diskuzní fórum{ifset #title} {include title|striptags}{/ifset}</h1>
+<header>
+    <h1 id="top"><img src="{$basePath}/images/rss.gif" alt="[F]">&nbsp;Diskuzní fórum{ifset #title} {include title|striptags}{/ifset}</h1>
+</header>
 
 <div n:foreach="$flashes as $flash" class="flash {$flash->type}">{$flash->message}</div>
 
-{include content}
+<main>
+    {include content}
+</main>
 
-<p>
-    <hr noshade align="left" size="1">
-
-    <span class="foot">
-    Diskuzní fórum 2014<br />
-    &copy; Tomáš Jacík. Za příspěvky odpovídají jejich autoři.
-    </span>
-</p>
-<a name="end"></a>
+<footer id="end">
+    Diskuzní fórum 2014<br>
+    &copy; <a href="https://tomasjacik.cz" target="_blank">Tomáš Jacík</a>. Za příspěvky odpovídají jejich autoři.
+</footer>
 
 </body>
 </html>

@@ -1,9 +1,11 @@
 {block title}- Odpověď{/block}
 
 {block content}
-    <span class="menu">
+    <nav>
         <a n:href="Homepage:">Návrat do fóra</a>
-    </span>
+    </nav>
+
+    <hr>
 
     {if isset($preview)}
         <p>
@@ -26,7 +28,7 @@
                 {if isset($subject)}
                 <tr>
                     <td><b>Předmět:</b></td>
-                    <td><input type="text" name="subject" size="42" maxlength="42" class="input" value="{$subject}" /></td>
+                    <td><input type="text" name="subject" size="42" maxlength="42" class="input" value="{$subject}"></td>
                 </tr>
                 {/if}
                 <tr>

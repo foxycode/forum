@@ -2,28 +2,27 @@
 
 {block content}
     {if !$preview}
-        <span class="menu">
+        <nav>
             <a n:href="Homepage:">Návrat do fóra</a> |
             <a n:href="Thread:reply $thread->thread_id">Vložit odpověd</a> |
             <a n:href="Thread: $thread->thread_id + 1">Novější</a> |
             <a n:href="Thread: $thread->thread_id - 1">Starší</a>
-        </span>
-        <p></p>
+        </nav>
     {/if}
-
-    <hr noshade align="left" size="1">
 
     {foreach $messages as $message}
         {include '../common/message.latte' message => $message, iterator => $iterator}
     {/foreach}
 
+    <hr>
+
     {if !$preview}
-        <span class="menu">
+        <nav>
             <a n:href="Homepage:">Návrat do fóra</a> |
             <a n:href="Thread:reply $thread->thread_id">Vložit odpověd</a> |
             <a n:href="Thread: $thread->thread_id + 1">Novější</a> |
             <a n:href="Thread: $thread->thread_id - 1">Starší</a>
-        </span>
+        </nav>
     {else}
         Toto je náhled zprávy, do které vkládáte odpověd.
     {/if}

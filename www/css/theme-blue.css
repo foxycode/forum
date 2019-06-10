@@ -5,21 +5,51 @@ body, table {
     background-color: #005599;
 }
 
+footer {
+    font-size: 78%;
+    border-top: 1px solid #ffffff;
+    max-width: 760px;
+    padding-top: 1em;
+    margin: 1em 0;
+}
+
+nav {
+    margin-bottom: 1em;
+}
+
+nav a {
+    color: #bbbbee;
+}
+
+nav a:hover {
+    color: #ffffff;
+}
+
 hr {
     clear: both;
     text-align: left;
     color: #ffffff;
     background-color: #ffffff;
-    width: 760px;
+    max-width: 760px;
     height: 1px;
+    border-width: 0;
+    margin-left: 0;
 }
 
 img {
-    border: none;
+    border: 0;
 }
 
 p {
     clear: both;
+}
+
+p.info {
+    max-width: 780px;
+}
+
+th, td {
+    white-space: nowrap;
 }
 
 a {
@@ -38,9 +68,20 @@ h1 {
     font-weight: bold;
 }
 
-.headers {
-    font-weight: bold;
+h1 img {
+    width: 16px;
+    height: 16px;
+}
+
+.threads {
+    border-spacing: 1px;
+    width: 100%;
+}
+
+.threads thead th {
+    text-align: left;
     background-color: #4455dd;
+    padding: 0.1em 0.3em;
 }
 
 .itemsl {
@@ -73,24 +114,13 @@ h1 {
     text-decoration: none;
 }
 
-.menu {
-    margin-bottom: 1em;
-}
-
-.menu a {
-    color: #bbbbee;
-}
-
-.menu a:hover {
-    color: #ffffff;
-}
-
 .message {
     color: inherit;
     padding: 0;
     margin: 2px;
     min-width: 780px;
     vertical-align: top;
+    border-spacing: 0;
 }
 
 .autor {
@@ -102,15 +132,10 @@ h1 {
 }
 
 .zprava {
-    padding-left: 10px;
+    padding: 0 0 0 10px;
     vertical-align: top;
     min-width: 760px;
     width: 637px;
-}
-
-.blackline {
-    width: 2px;
-    background-color: #003377;
 }
 
 .search {
@@ -142,13 +167,18 @@ pre {
 }
 
 .center {
-    text-align: center;
+    text-align: center !important;
 }
 
 .right {
-    text-align: right;
+    text-align: right !important;
 }
 
 .foot {
     font-size: 78%;
+}
+
+.error {
+    color: #D00;
+    font-weight: bold;
 }
