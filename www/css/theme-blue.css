@@ -5,16 +5,6 @@ body, table {
     background-color: #005599;
 }
 
-.loading {
-    font-family: Arial, sans-serif;
-    font-size: 0.8em;
-    float: right;
-    color: #ffffff;
-    background-color: #222266;
-    margin: 1px;
-    padding: 1px;
-}
-
 hr {
     clear: both;
     text-align: left;
