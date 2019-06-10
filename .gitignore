@@ -4,4 +4,4 @@ temp/
 vendor/
 !.gitignore
 !.htaccess
-app/Config/config.local.neon
+app/Config/local.neon

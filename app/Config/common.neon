@@ -1,8 +1,5 @@
 parameters:
 
-php:
-    date.timezone: Europe/Prague
-
 application:
     errorPresenter: Error
     mapping:
@@ -12,8 +9,8 @@ session:
     expiration: 1 year
 
 services:
-    - App\Model\UserManager
     router: App\Router\RouterFactory::createRouter
 
-    threadRepository: App\Model\ThreadRepository
-    messageRepository: App\Model\MessageRepository
+    - App\Model\MessageRepository
+    - App\Model\ThreadRepository
+    - App\Model\UserManager

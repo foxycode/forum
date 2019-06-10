@@ -31,7 +31,7 @@ final class SignPresenter extends Nette\Application\UI\Presenter
     {
         try {
             $this->getUser()->login($values->username, $values->password);
-            $this->getUser()->setExpiration(0, FALSE);
+            $this->getUser()->setExpiration(NULL);
             $this->redirect('Homepage:');
         } catch (Nette\Security\AuthenticationException $e) {
             $form->addError($e->getMessage());
