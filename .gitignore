@@ -1,7 +1,2 @@
-.ecs_cache/
-log/
-temp/
-vendor/
-!.gitignore
-!.htaccess
-app/Config/local.neon
+/.ecs_cache/
+/vendor/
