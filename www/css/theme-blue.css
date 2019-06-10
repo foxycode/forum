@@ -1,136 +1,164 @@
 body, table {
-  font-family:Arial,sans-serif;
-  font-size:0.95em;
-  color:#ffffff;
-  background-color:#005599;
-  }
+    font-family: Arial, sans-serif;
+    font-size: 0.95em;
+    color: #ffffff;
+    background-color: #005599;
+}
+
 .loading {
-  font-family:Arial,sans-serif;
-  font-size:0.8em;
-  float:right;
-  color:#ffffff;
-  background-color:#222266;
-  margin:1px;
-  padding:1px;
-  }
+    font-family: Arial, sans-serif;
+    font-size: 0.8em;
+    float: right;
+    color: #ffffff;
+    background-color: #222266;
+    margin: 1px;
+    padding: 1px;
+}
+
 hr {
-  clear:both;
-  text-align:left;
-  color:#ffffff;
-  background-color:#ffffff;
-  width:760px;
-  height:1px;
-  }
+    clear: both;
+    text-align: left;
+    color: #ffffff;
+    background-color: #ffffff;
+    width: 760px;
+    height: 1px;
+}
+
 img {
-  border: none;
-  }
+    border: none;
+}
+
 p {
-  clear: both;
-  }
+    clear: both;
+}
+
 a {
-  text-decoration:underline;
-  color: #ffffff;
-  }
+    text-decoration: underline;
+    color: #ffffff;
+}
+
 a:hover {
-  text-decoration:underline;
-  color: #aa3333;
-  }
+    text-decoration: underline;
+    color: #aa3333;
+}
+
 h1 {
-  letter-spacing:-0.035em;
-  font-size:1.25em;
-  font-weight:bold;
-  }
+    letter-spacing: -0.035em;
+    font-size: 1.25em;
+    font-weight: bold;
+}
+
 .headers {
-  font-weight:bold;
-  background-color:#4455dd;
-  }
+    font-weight: bold;
+    background-color: #4455dd;
+}
+
 .itemsl {
-  background-color:#ccddff;
-  }
+    background-color: #ccddff;
+}
+
 .itemss {
-  background-color:#ddeeff;
-  }
+    background-color: #ddeeff;
+}
+
 .unread, .unread a, .unread a:hover {
-  font-weight:bold;
-  font-size:102%;
-  color: #112299;
-  }
+    font-weight: bold;
+    font-size: 102%;
+    color: #112299;
+}
+
 .read, .read a, .read a:hover {
-  font-weight:normal;
-  font-size:0.95em;
-  color: #333366;
-  }
+    font-weight: normal;
+    font-size: 0.95em;
+    color: #333366;
+}
+
 .new {
-  background-color:#4444ff;
-  font-weight: bold;
-  color:#ffffff;
-  }
-.itemsl a,.itemsl a:hover,.itemss a,.itemss a:hover {
-  text-decoration:none;
-  }
+    background-color: #4444ff;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.itemsl a, .itemsl a:hover, .itemss a, .itemss a:hover {
+    text-decoration: none;
+}
+
 .menu {
-  margin-bottom: 1em;
-  }
+    margin-bottom: 1em;
+}
+
 .menu a {
-  color: #bbbbee;
-  }
+    color: #bbbbee;
+}
+
 .menu a:hover {
-  color: #ffffff;
-  }
+    color: #ffffff;
+}
+
 .message {
-  color:inherit;
-  padding:0;
-  margin:2px;
-  min-width:780px;
-  vertical-align:top;
-  }
+    color: inherit;
+    padding: 0;
+    margin: 2px;
+    min-width: 780px;
+    vertical-align: top;
+}
+
 .autor {
-  width:123px;
-  min-width:123px;
-  padding:2px;
-  vertical-align:top;
-  background-color:#002266;
-  }
+    width: 123px;
+    min-width: 123px;
+    padding: 2px;
+    vertical-align: top;
+    background-color: #002266;
+}
+
 .zprava {
-  padding-left:10px;
-  vertical-align:top;
-  min-width:760px;
-  width:637px;
-  }
+    padding-left: 10px;
+    vertical-align: top;
+    min-width: 760px;
+    width: 637px;
+}
+
 .blackline {
-  width:2px;
-  background-color:#003377;
-  }
+    width: 2px;
+    background-color: #003377;
+}
+
 .search {
-  padding-bottom: 1em;
-  }
+    padding-bottom: 1em;
+}
+
 .search input {
-  width: 350px;
-  }
+    width: 350px;
+}
+
 pre {
-  font-family:Arial,sans-serif;
-  font-size:0.9em;
-  color:inherit;
-  margin:0;
-  padding:0;
-  white-space: pre-wrap;       /* CSS 3 */
-  white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
-  white-space: -pre-wrap;      /* Opera 4-6 */
-  white-space: -o-pre-wrap;    /* Opera 7 */
-  word-wrap: break-word;       /* Internet Explorer 5.5+ */
-  }
+    font-family: Arial, sans-serif;
+    font-size: 0.9em;
+    color: inherit;
+    margin: 0;
+    padding: 0;
+    white-space: pre-wrap; /* CSS 3 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+
 .input {
-  font-family:Arial,sans-serif;
-  font-size:0.9em;
-  color:#000000;
-  background-color:#ffffff;
-  }
+    font-family: Arial, sans-serif;
+    font-size: 0.9em;
+    color: #000000;
+    background-color: #ffffff;
+}
+
 .center {
-  text-align: center;
-  }
+    text-align: center;
+}
+
 .right {
-  text-align: right;
-  }
+    text-align: right;
+}
+
 .foot {
-  font-size:78%;
-  }
+    font-size: 78%;
+}
