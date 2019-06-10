@@ -1,21 +1,14 @@
 {block title}(nejnovějších {$perpage} příspěvků){/block}
 
 {block content}
-    <form method="get" action="{link this}">
-        <span class="menu">Přihlášen: <b>{$user->getIdentity()->data['nick']}</b> |
-            <a n:href="Thread:new">Nový příspěvek</a> |
-            <a n:href="Setting:">Nastavení</a> |
-            <a n:href="Homepage:search">Vyhledávání</a> |
-            <a n:href="Homepage:">Obnovit</a> |
-            <select class="input" name="view" id="view" size="1" onchange="return filtr();">
-                <option value="all">Zobrazit vše</option>
-                <option value="unread"{*$view=~'unread' ? ' selected="selected"' : ''*}>Nepřečtené</option>
-            </select>
-            <input type="submit" value="&gt;" class="input"> |
-            <a n:href="Sign:out">Odhlásit</a>
-        </span>
-    </form>
-    <br />
+    <div class="menu">
+        Přihlášen: <b>{$user->getIdentity()->data['nick']}</b> |
+        <a n:href="Thread:new">Nový příspěvek</a> |
+        <a n:href="Setting:">Nastavení</a> |
+        <a n:href="Homepage:search">Vyhledávání</a> |
+        <a n:href="Homepage:">Obnovit</a> |
+        <a n:href="Sign:out">Odhlásit</a>
+    </div>
 
     <table cellspacing="1" cellpadding="1" border="0" width="100%">
         <tr>

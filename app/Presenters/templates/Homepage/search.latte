@@ -1,26 +1,18 @@
 {block title}- Vyhledávání{/block}
 
 {block content}
-    <form method="get" action="{link this}">
-        <span class="menu">Přihlášen: <b>{$user->getIdentity()->data['nick']}</b> |
-            <a n:href="Homepage:">Seznam příspěvků</a> |
-            <a n:href="Thread:new">Nový příspěvek</a> |
-            <a n:href="Setting:">Nastavení</a>
-            <select class="input" name="view" id="view" size="1" onchange="return filtr();">
-                <option value="all">Zobrazit vše</option>
-                <option value="unread"{*$view=~'unread' ? ' selected="selected"' : ''*}>Nepřečtené</option>
-            </select>
-            <input type="submit" value="&gt;" class="input"> |
-            <a n:href="Sign:out">Odhlásit</a>
-        </span>
-    </form>
-    <br />
+    <div class="menu">
+        Přihlášen: <b>{$user->getIdentity()->data['nick']}</b> |
+        <a n:href="Homepage:">Seznam příspěvků</a> |
+        <a n:href="Thread:new">Nový příspěvek</a> |
+        <a n:href="Setting:">Nastavení</a> |
+        <a n:href="Sign:out">Odhlásit</a>
+    </div>
 
-    <form method="get" action="{link this}">
-        <input type="text" id="q" name="q" value="{$q}" autocomplete="off" style="width:350px;border:1px solid black;color:red;" />
+    <form class="search" method="get" action="{link this}">
+        <input type="text" id="q" name="q" value="{$q}" autocomplete="off" />
         <button type="submit">Hledej</button>
     </form>
-    <br />
 
     <table cellspacing="1" cellpadding="1" border="0" width="100%">
         <tr>

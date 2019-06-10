@@ -71,6 +71,9 @@ h1 {
 .menu a {
   color: #3333aa;
   }
+.menu {
+  margin-bottom: 1em;
+  }
 .menu a:hover {
   color: #aa3333;
   }
@@ -97,6 +100,12 @@ h1 {
 .blackline {
   width:2px;
   background-color:#88ffff;
+  }
+.search {
+  padding-bottom: 1em;
+  }
+.search input {
+  width: 350px;
   }
 pre {
   font-family:Arial,sans-serif;

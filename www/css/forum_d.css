@@ -68,6 +68,9 @@ h1 {
 .itemsl a,.itemsl a:hover,.itemss a,.itemss a:hover {
   text-decoration:none;
   }
+.menu {
+  margin-bottom: 1em;
+  }
 .menu a {
   color: #bbbbee;
   }
@@ -97,6 +100,12 @@ h1 {
 .blackline {
   width:2px;
   background-color:#003377;
+  }
+.search {
+  padding-bottom: 1em;
+  }
+.search input {
+  width: 350px;
   }
 pre {
   font-family:Arial,sans-serif;
