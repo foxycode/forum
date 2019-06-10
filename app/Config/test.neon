@@ -1,0 +1,7 @@
+database:
+    dsn: 'mysql:host=mysql;dbname=forum'
+    user: root
+    password: ''
+
+session:
+    savePath: "%appDir%/../var/sessions"
