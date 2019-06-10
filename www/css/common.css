@@ -202,17 +202,8 @@ pre {
 
 /* Extra small devices (portrait phones, less than 576px) */
 @media (max-width: 575px) {
-    nav span:after {
-        content: '';
-    }
-    nav ul {
-        display: block;
-    }
-    nav li {
-        display: block;
-    }
-    nav li:before {
-        content: '';
+    nav span {
+        display: none;
     }
 
     .search input {
