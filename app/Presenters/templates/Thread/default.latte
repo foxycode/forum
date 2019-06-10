@@ -3,10 +3,12 @@
 {block content}
     {if !$preview}
         <nav>
-            <a n:href="Homepage:">Návrat do fóra</a> |
-            <a n:href="Thread:reply $thread->thread_id">Vložit odpověd</a> |
-            <a n:href="Thread: $thread->thread_id + 1">Novější</a> |
-            <a n:href="Thread: $thread->thread_id - 1">Starší</a>
+            <ul>
+                <li><a n:href="Homepage:">Návrat do fóra</a></li>
+                <li><a n:href="Thread:reply $thread->thread_id">Vložit odpověd</a></li>
+                <li><a n:href="Thread: $thread->thread_id + 1">Novější</a></li>
+                <li><a n:href="Thread: $thread->thread_id - 1">Starší</a></li>
+            </ul>
         </nav>
     {/if}
 
@@ -18,10 +20,12 @@
 
     {if !$preview}
         <nav>
-            <a n:href="Homepage:">Návrat do fóra</a> |
-            <a n:href="Thread:reply $thread->thread_id">Vložit odpověd</a> |
-            <a n:href="Thread: $thread->thread_id + 1">Novější</a> |
-            <a n:href="Thread: $thread->thread_id - 1">Starší</a>
+            <ul>
+                <li><a n:href="Homepage:">Návrat do fóra</a></li>
+                <li><a n:href="Thread:reply $thread->thread_id">Vložit odpověd</a></li>
+                <li><a n:href="Thread: $thread->thread_id + 1">Novější</a></li>
+                <li><a n:href="Thread: $thread->thread_id - 1">Starší</a></li>
+            </ul>
         </nav>
     {else}
         Toto je náhled zprávy, do které vkládáte odpověd.

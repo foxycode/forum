@@ -1,27 +1,20 @@
 <table class="threads">
-    <colgroup>
-        <col style="width:37%">
-        <col style="width:27%">
-        <col style="width:5%">
-        <col style="width:16%">
-        <col style="width:15%">
-    </colgroup>
     <thead>
-    <tr>
-        <th>Předmět</th>
-        <th>Autor</th>
-        <th class="center"><abbr lang="cs" title="Počet odpoědí ve vlákně">#</abbr></th>
-        <th>Založeno</th>
-        <th class="right">Poslední příspěvek</th>
-    </tr>
+        <tr>
+            <th>Předmět</th>
+            <th>Autor</th>
+            <th class="center"><abbr lang="cs" title="Počet odpoědí ve vlákně">#</abbr></th>
+            <th>Založeno</th>
+            <th class="right">Poslední příspěvek</th>
+        </tr>
     </thead>
-    <tbody>
-    <tr n:foreach="$threads as $thread">
-        <td n:class="$iterator->even ? itemss : itemsl, $thread->replies_read === $thread->replies_count ? read : unread"><a n:href="Thread: $thread->thread_id">&nbsp;{$thread->subject}</a></td>
-        <td n:class="$iterator->even ? itemss : itemsl, $thread->replies_read === $thread->replies_count ? read : unread"><a n:href="Thread: $thread->thread_id">&nbsp;{$thread->submiter_name}</a></td>
-        <td n:class="$iterator->even ? itemss : itemsl, $thread->replies_read === $thread->replies_count ? read : unread, center"><a n:href="Thread: $thread->thread_id">&nbsp;{$thread->replies_count}</a></td>
-        <td n:class="$iterator->even ? itemss : itemsl, $thread->replies_read === $thread->replies_count ? read : unread"><a n:href="Thread: $thread->thread_id">&nbsp;{$thread->create_time|date:'%H:%M %d.%m. %Y'}</a></td>
-        <td n:class="$iterator->even ? itemss : itemsl, $thread->replies_read === $thread->replies_count ? read : unread, right"><a href="{link Thread: $thread->thread_id}#{if $thread->replies_read < $thread->replies_count}new{else}{$thread->replies_count}{/if}">&nbsp;{$thread->last_reply_time|date:'%H:%M %d.%m. %Y'}&nbsp;<br><span class="small">napsal</span> {$thread->last_reply_by_name}&nbsp;</a></td>
-    </tr>
+    <tbody n:if="$threads">
+        <tr n:foreach="$threads as $thread">
+            <td n:class="$iterator->even ? itemss : itemsl, $thread->replies_read === $thread->replies_count ? read : unread"><a n:href="Thread: $thread->thread_id">&nbsp;{$thread->subject}</a></td>
+            <td n:class="$iterator->even ? itemss : itemsl, $thread->replies_read === $thread->replies_count ? read : unread"><a n:href="Thread: $thread->thread_id">&nbsp;{$thread->submiter_name}</a></td>
+            <td n:class="$iterator->even ? itemss : itemsl, $thread->replies_read === $thread->replies_count ? read : unread, center"><a n:href="Thread: $thread->thread_id">&nbsp;{$thread->replies_count}</a></td>
+            <td n:class="$iterator->even ? itemss : itemsl, $thread->replies_read === $thread->replies_count ? read : unread"><a n:href="Thread: $thread->thread_id">&nbsp;{$thread->create_time|date:'%H:%M %d.%m. %Y'}</a></td>
+            <td n:class="$iterator->even ? itemss : itemsl, $thread->replies_read === $thread->replies_count ? read : unread, right"><a href="{link Thread: $thread->thread_id}#{if $thread->replies_read < $thread->replies_count}new{else}{$thread->replies_count}{/if}">&nbsp;{$thread->last_reply_time|date:'%H:%M %d.%m. %Y'}&nbsp;<br><span class="small">napsal</span> {$thread->last_reply_by_name}&nbsp;</a></td>
+        </tr>
     </tbody>
 </table>

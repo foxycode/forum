@@ -2,11 +2,13 @@
 
 {block content}
     <nav>
-        Přihlášen: <b>{$user->getIdentity()->data['nick']}</b> |
-        <a n:href="Homepage:">Seznam příspěvků</a> |
-        <a n:href="Thread:new">Nový příspěvek</a> |
-        <a n:href="Setting:">Nastavení</a> |
-        <a n:href="Sign:out">Odhlásit</a>
+        <span>Přihlášen: <strong>{$user->getIdentity()->data['nick']}</strong></span>
+        <ul>
+            <li><a n:href="Homepage:">Seznam příspěvků</a></li>
+            <li><a n:href="Thread:new">Nový příspěvek</a></li>
+            <li><a n:href="Setting:">Nastavení</a></li>
+            <li><a n:href="Sign:out">Odhlásit</a></li>
+        </ul>
     </nav>
 
     <form class="search" method="get" action="{link this}">
