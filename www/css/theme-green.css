@@ -1,24 +1,14 @@
 body, table {
-    font-family: Arial, sans-serif;
-    font-size: 0.95em;
-    color: #000000;
+    color: #000;
     background-color: #44eeee;
 }
 
 footer {
-    font-size: 78%;
-    border-top: 1px solid #000000;
-    max-width: 760px;
-    padding-top: 1em;
-    margin: 1em 0;
+    border-top: 1px solid #000;
 }
 
 nav a {
     color: #3333aa;
-}
-
-nav {
-    margin-bottom: 1em;
 }
 
 nav a:hover {
@@ -26,62 +16,20 @@ nav a:hover {
 }
 
 hr {
-    clear: both;
-    text-align: left;
-    color: #000000;
-    background-color: #000000;
-    max-width: 760px;
-    height: 1px;
-    border-width: 0;
-    margin-left: 0;
-}
-
-img {
-    border: 0;
-}
-
-p {
-    clear: both;
-}
-
-p.info {
-    max-width: 780px;
-}
-
-td {
-    white-space: nowrap;
+    color: #000;
+    background-color: #000;
 }
 
 a {
-    text-decoration: underline;
-    color: #000000;
+    color: #000;
 }
 
 a:hover {
-    text-decoration: underline;
     color: #aa3333;
 }
 
-h1 {
-    letter-spacing: -0.035em;
-    font-size: 1.25em;
-    font-weight: bold;
-}
-
-h1 img {
-    width: 16px;
-    height: 16px;
-}
-
-.threads {
-    border-spacing: 1px;
-    width: 100%;
-}
-
 .threads thead th {
-    text-align: left;
     background-color: #66bbdd;
-    padding: 0.1em 0.3em;
 }
 
 .itemsl {
@@ -93,92 +41,23 @@ h1 img {
 }
 
 .unread, .unread a, .unread a:hover {
-    font-weight: bold;
-    font-size: 102%;
     color: #112299;
 }
 
 .read, .read a, .read a:hover {
-    font-weight: normal;
-    font-size: 0.95em;
     color: #666666;
 }
 
 .new {
     background-color: #ff4444;
-    font-weight: bold;
     color: #ffffff;
 }
 
-.itemsl a, .itemsl a:hover, .itemss a, .itemss a:hover {
-    text-decoration: none;
-}
-
-.message {
-    color: inherit;
-    padding: 0;
-    margin: 2px;
-    min-width: 780px;
-    vertical-align: top;
-    border-spacing: 0;
-}
-
 .autor {
-    width: 123px;
-    min-width: 123px;
-    padding: 2px;
-    vertical-align: top;
     background-color: #88ffff;
 }
 
-.zprava {
-    padding: 0 0 0 10px;
-    vertical-align: top;
-    min-width: 760px;
-    width: 637px;
-}
-
-.search {
-    padding-bottom: 1em;
-}
-
-.search input {
-    width: 350px;
-}
-
-pre {
-    font-family: Arial, sans-serif;
-    font-size: 0.9em;
-    color: inherit;
-    margin: 0;
-    padding: 0;
-    white-space: pre-wrap; /* CSS 3 */
-    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
-    white-space: -pre-wrap; /* Opera 4-6 */
-    white-space: -o-pre-wrap; /* Opera 7 */
-    word-wrap: break-word; /* Internet Explorer 5.5+ */
-}
-
 .input {
-    font-family: Arial, sans-serif;
-    font-size: 0.9em;
     color: #000000;
     background-color: #ffffff;
-}
-
-.center {
-    text-align: center !important;
-}
-
-.right {
-    text-align: right !important;
-}
-
-.foot {
-    font-size: 78%;
-}
-
-.error {
-    color: #D00;
-    font-weight: bold;
 }

@@ -21,7 +21,7 @@
         <td n:class="$iterator->even ? itemss : itemsl, $thread->replies_read === $thread->replies_count ? read : unread"><a n:href="Thread: $thread->thread_id">&nbsp;{$thread->submiter_name}</a></td>
         <td n:class="$iterator->even ? itemss : itemsl, $thread->replies_read === $thread->replies_count ? read : unread, center"><a n:href="Thread: $thread->thread_id">&nbsp;{$thread->replies_count}</a></td>
         <td n:class="$iterator->even ? itemss : itemsl, $thread->replies_read === $thread->replies_count ? read : unread"><a n:href="Thread: $thread->thread_id">&nbsp;{$thread->create_time|date:'%H:%M %d.%m. %Y'}</a></td>
-        <td n:class="$iterator->even ? itemss : itemsl, $thread->replies_read === $thread->replies_count ? read : unread, right"><a href="{link Thread: $thread->thread_id}#{if $thread->replies_read < $thread->replies_count}new{else}{$thread->replies_count}{/if}">&nbsp;{$thread->last_reply_time|date:'%H:%M %d.%m. %Y'}&nbsp;<br><span class="foot">napsal</span> {$thread->last_reply_by_name}&nbsp;</a></td>
+        <td n:class="$iterator->even ? itemss : itemsl, $thread->replies_read === $thread->replies_count ? read : unread, right"><a href="{link Thread: $thread->thread_id}#{if $thread->replies_read < $thread->replies_count}new{else}{$thread->replies_count}{/if}">&nbsp;{$thread->last_reply_time|date:'%H:%M %d.%m. %Y'}&nbsp;<br><span class="small">napsal</span> {$thread->last_reply_by_name}&nbsp;</a></td>
     </tr>
     </tbody>
 </table>
