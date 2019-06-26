@@ -59,6 +59,12 @@ final class UserManager implements IAuthenticator
 
     public function update(int $id, ArrayHash $values): void
     {
+        foreach (['mail', 'icq', 'jabber'] as $nullItem) {
+            if ($values->{$nullItem} === '') {
+                $values->{$nullItem} = NULL;
+            }
+        }
+
         $this->database->table('user')->where('user_id', $id)->update($values);
     }
 }
