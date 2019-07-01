@@ -19,7 +19,7 @@
 
             <ul>
                 <li n:if="$message->mail"><a href="mailto:{$message->mail}" class="small">{$message->mail}</a></li>
-                <li n:if="$message->icq"><img src="http://wwp.icq.com/scripts/online.dll?icq={$message->icq}&amp;img=5" width="17" alt="(o)"> {$message->icq}</li>
+                <li n:if="$message->icq"><img src="https://status.icq.com/online.gif?icq={$message->icq}&amp;img=5" width="17" alt="(o)"> {$message->icq}</li>
                 <li n:if="$message->jabber"><img src="http://netlab.cz/status/?jid={$message->jabber}&amp;ib=psi" alt="Jabber">{$message->jabber}</li>
             </ul>
         </div>

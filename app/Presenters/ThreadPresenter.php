@@ -149,9 +149,9 @@ final class ThreadPresenter extends BasePresenter
 
         $body = preg_replace("~mailto:([^ \n]*)~i", '<a href="mailto:\\1">\\1</a>', $body);
 
-        for ($z = 1; $z <= 1765; $z++) {
-            $body = str_replace("*$z*", '<img src="http://img.xchat.centrum.cz/images/x4/sm/'
-                . (substr((string) $z, strlen((string) $z) - 2, 2) + 0) . "/$z.gif\" alt=\"*$z*\" />", $body);
+        for ($z = 1; $z <= 126; $z++) {
+            $body = str_replace("*$z*", '<img src="https://x.ximg.cz/images/x4/sm/' .
+                "$z.gif\" alt=\"*$z*\">", $body);
         }
 
         return $body;
