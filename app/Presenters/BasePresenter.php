@@ -10,6 +10,7 @@ abstract class BasePresenter extends Presenter
     private const THEMES = [
         'forum.css' => 'green',
         'forum_d.css' => 'blue',
+        'forum_b.css' => 'black',
     ];
 
     /**

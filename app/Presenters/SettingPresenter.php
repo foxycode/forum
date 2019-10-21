@@ -53,6 +53,7 @@ final class SettingPresenter extends BasePresenter
         $style = [
             'forum.css' => 'Světle modrý',
             'forum_d.css' => 'Tmavě modrý',
+            'forum_b.css' => 'Černý',
         ];
         $form->addSelect('style', 'Vzhled', $style)
             ->addRule(Form::FILLED, 'Je nutné vybrat vzhled');

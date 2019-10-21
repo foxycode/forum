@@ -1,0 +1,63 @@
+body, table {
+    color: #aaa;
+    background-color: #000;
+}
+
+footer {
+    border-top: 1px solid #aaa;
+}
+
+nav a {
+    color: #666;
+}
+
+nav a:hover {
+    color: #aa3333;
+}
+
+hr {
+    color: #000;
+    background-color: #555;
+}
+
+a {
+    color: #888;
+}
+
+a:hover {
+    color: #aa3333;
+}
+
+.threads thead th {
+    background-color: #444;
+}
+
+.itemsl {
+    background-color: #222;
+}
+
+.itemss {
+    background-color: #333;
+}
+
+.unread, .unread a, .unread a:hover {
+    color: #557788;
+}
+
+.read, .read a, .read a:hover {
+    color: #999;
+}
+
+.new {
+    background-color: #000;
+    color: #fff;
+}
+
+.message-author {
+    background-color: #444;
+}
+
+.input {
+    color: #aaa;
+    background-color: #000;
+}
