@@ -1,7 +1,7 @@
 version: '3'
 services:
     nginx:
-        container_name: forum_nginx
+        container_name: forum-nginx
         image: nginx:alpine
         ports:
             - 80:80
@@ -16,7 +16,7 @@ services:
             - php
 
     php:
-        container_name: forum_php
+        container_name: forum-php
         image: sunfoxcz/php:7.3-fpm
         environment:
             - NETTE_DEVEL=1
@@ -27,20 +27,21 @@ services:
             - mysql
 
     mysql:
-        container_name: forum_db
+        container_name: forum-db
         image: mysql:5.7
         environment:
             - MYSQL_ALLOW_EMPTY_PASSWORD=yes
             - MYSQL_ROOT_PASSWORD=
         volumes:
+            - mysql-data:/var/lib/mysql
             - ./etc/mysql:/docker-entrypoint-initdb.d
             - ./etc/mysql/mysqld.cnf:/etc/mysql/conf.d/mysqld.cnf
-            - ./var/docker/forum-mysql:/var/lib/mysql
 
     adminer:
-        container_name: forum_adminer
-        image: pkristian/adminer
-        ports:
-            - 8080:8080
+        container_name: forum-adminer
+        image: adminer:fastcgi
         links:
-            - mysql:db
+            - "mysql:db"
+
+volumes:
+    mysql-data:
