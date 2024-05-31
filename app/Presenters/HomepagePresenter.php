@@ -6,15 +6,10 @@ use App\Model\ThreadRepository;
 
 final class HomepagePresenter extends BasePresenter
 {
-    /**
-     * @var ThreadRepository
-     */
-    private $threadRepository;
-
-    public function __construct(ThreadRepository $threadRepository)
-    {
+    public function __construct(
+        private readonly ThreadRepository $threadRepository,
+    ) {
         parent::__construct();
-        $this->threadRepository = $threadRepository;
     }
 
     public function actionDefault(): void

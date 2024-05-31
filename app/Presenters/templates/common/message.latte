@@ -15,7 +15,7 @@
                     Odpověď č. {$iterator->counter - 1}
                 {/if}
             </div>
-            <div class="small">{$message->create_time|date:'%H:%M %d.%m.%Y'}</div>
+            <div class="small">{$message->create_time|date:'h:i d.m.Y'}</div>
 
             <ul>
                 <li n:if="$message->mail"><a href="mailto:{$message->mail}" class="small">{$message->mail}</a></li>

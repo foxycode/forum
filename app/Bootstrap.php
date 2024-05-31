@@ -2,25 +2,26 @@
 
 namespace App;
 
-use Nette\Configurator;
+use Nette\Bootstrap\Configurator;
 
 final class Bootstrap
 {
     public static function boot(): Configurator
     {
-        $configurator = new Configurator;
+        $configurator = new Configurator();
+        $appDir = dirname(__DIR__);
 
         if (getenv('NETTE_DEVEL') === '1') {
             $configurator->setDebugMode(TRUE);
         }
 
-        $configurator->enableTracy(__DIR__ . '/../log');
+        $configurator->enableTracy($appDir . '/log');
         setlocale(LC_ALL, 'cs_CZ.utf8');
         $configurator->setTimeZone('Europe/Prague');
-        $configurator->setTempDirectory(__DIR__ . '/../temp');
+        $configurator->setTempDirectory($appDir . '/temp');
 
-        $configurator->addConfig(__DIR__ . '/Config/common.neon');
-        $configurator->addConfig(__DIR__ . '/Config/local.neon');
+        $configurator->addConfig($appDir . '/config/common.neon');
+        $configurator->addConfig($appDir . '/config/local.neon');
 
         return $configurator;
     }

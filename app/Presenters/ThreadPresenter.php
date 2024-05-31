@@ -12,26 +12,13 @@ use Nette\Utils\ArrayHash;
 
 final class ThreadPresenter extends BasePresenter
 {
-    /**
-     * @var MessageRepository
-     */
-    private $messageRepository;
+    private ?Row $thread;
 
-    /**
-     * @var ThreadRepository
-     */
-    private $threadRepository;
-
-    /**
-     * @var Row
-     */
-    private $thread;
-
-    public function __construct(MessageRepository $messageRepository, ThreadRepository $threadRepository)
-    {
+    public function __construct(
+        private readonly MessageRepository $messageRepository,
+        private readonly ThreadRepository $threadRepository,
+    ) {
         parent::__construct();
-        $this->messageRepository = $messageRepository;
-        $this->threadRepository = $threadRepository;
     }
 
     protected function createComponentMessageForm(): Form
@@ -40,12 +27,12 @@ final class ThreadPresenter extends BasePresenter
 
         if ($this->getParameter('action') === 'new') {
             $form->addText('subject', 'Předmět')
-                ->addRule(Form::MAX_LENGTH, 'Maximální povolená délka předmětu je %d znaků.', 42)
-                ->addRule(Form::FILLED, 'Je nutné vyplnit předmět.');
+                ->addRule(Form::MaxLength, 'Maximální povolená délka předmětu je %d znaků.', 42)
+                ->addRule(Form::Filled, 'Je nutné vyplnit předmět.');
         }
 
         $form->addTextarea('text', 'Zpráva')
-            ->addRule(Form::FILLED, 'Je nutné vyplnit zprávu.');
+            ->addRule(Form::Filled, 'Je nutné vyplnit zprávu.');
 
         $form->addSubmit('preview', 'Náhled');
         $form->addSubmit('submit', 'Odeslat zprávu');

@@ -7,7 +7,7 @@ use Nette\Application\UI\Presenter;
 
 abstract class BasePresenter extends Presenter
 {
-    private const THEMES = [
+    private const Themes = [
         'forum.css' => 'green',
         'forum_d.css' => 'blue',
         'forum_b.css' => 'black',
@@ -20,7 +20,7 @@ abstract class BasePresenter extends Presenter
     {
         parent::startup();
 
-        if (!$this->user->isLoggedIn() && $this->name !== 'Sign') {
+        if (!$this->getUser()->isLoggedIn() && $this->getName() !== 'Sign') {
             $this->redirect('Sign:in');
         }
     }
@@ -30,6 +30,6 @@ abstract class BasePresenter extends Presenter
         parent::beforeRender();
 
         $style = $this->getUser()->getIdentity() ? $this->getUser()->getIdentity()->style : 'green';
-        $this->template->theme = self::THEMES[$style] ?? 'green';
+        $this->template->theme = self::Themes[$style] ?? 'green';
     }
 }

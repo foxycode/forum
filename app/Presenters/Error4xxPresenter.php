@@ -3,21 +3,22 @@
 namespace App\Presenters;
 
 use Nette;
+use Nette\Application\Attributes\Requires;
 
+/**
+ * Handles 4xx HTTP error responses.
+ */
+#[Requires(methods: '*')]
 final class Error4xxPresenter extends Nette\Application\UI\Presenter
 {
-    public function startup(): void
-    {
-        parent::startup();
-        if (!$this->getRequest()->isMethod(Nette\Application\Request::FORWARD)) {
-            $this->error();
-        }
-    }
-
     public function renderDefault(Nette\Application\BadRequestException $exception): void
     {
-        // load template 403.latte or 404.latte or ... 4xx.latte
-        $file = __DIR__ . "/templates/Error/{$exception->getCode()}.latte";
-        $this->template->setFile(is_file($file) ? $file : __DIR__ . '/templates/Error/4xx.latte');
+        // renders the appropriate error template based on the HTTP status code
+        $code = $exception->getCode();
+        $file = is_file($file = __DIR__ . "/templates/Error4xx/$code.latte")
+            ? $file
+            : __DIR__ . '/templates/Error4xx/4xx.latte';
+        $this->template->httpCode = $code;
+        $this->template->setFile($file);
     }
 }

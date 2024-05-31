@@ -4,25 +4,20 @@ namespace App\Presenters;
 
 use App\Model\UserManager;
 use Nette\Application\UI\Form;
-use Nette\Security\Identity;
+use Nette\Security\SimpleIdentity;
 use Nette\Utils\ArrayHash;
 
 final class SettingPresenter extends BasePresenter
 {
-    /**
-     * @var UserManager
-     */
-    private $userManager;
-
-    public function __construct(UserManager $userManager)
-    {
+    public function __construct(
+        private readonly UserManager $userManager,
+    ) {
         parent::__construct();
-        $this->userManager = $userManager;
     }
 
     protected function createComponentUserForm(): Form
     {
-        $form = new Form;
+        $form = new Form();
 
         $perpage = [
             25 => 25,
@@ -35,20 +30,20 @@ final class SettingPresenter extends BasePresenter
             200 => 200,
         ];
         $form->addSelect('perpage', 'Počet příspěvků', $perpage)
-            ->addRule(Form::FILLED, 'Je nutné vybrat počet příspěvků');
+            ->addRule(Form::Filled, 'Je nutné vybrat počet příspěvků');
 
         $sortby = [
             'last_reply_time' => 'Času poslední odpovědi',
             'create_time' => 'Času vytvoření',
         ];
         $form->addSelect('sortby', 'Řadit podle', $sortby)
-            ->addRule(Form::FILLED, 'Je nutné vybrat řazení');
+            ->addRule(Form::Filled, 'Je nutné vybrat řazení');
 
         $form->addPassword('oldPassword', 'Staré heslo')
             ->setRequired(TRUE)
             ->addRule(function ($item, $arg) {
                 return md5($item->value) == $arg;
-            }, 'Je nutné zadat platné heslo', $this->user->identity->data['password']);
+            }, 'Je nutné zadat platné heslo', $this->getUser()->getIdentity()->data['password']);
 
         $style = [
             'forum.css' => 'Světle modrý',
@@ -56,7 +51,7 @@ final class SettingPresenter extends BasePresenter
             'forum_b.css' => 'Černý',
         ];
         $form->addSelect('style', 'Vzhled', $style)
-            ->addRule(Form::FILLED, 'Je nutné vybrat vzhled');
+            ->addRule(Form::Filled, 'Je nutné vybrat vzhled');
 
         $form->addText('mail', 'E-mail');
         $form->addText('icq', 'ICQ');
@@ -64,7 +59,7 @@ final class SettingPresenter extends BasePresenter
         $form->addPassword('newPassword1', 'Nové heslo');
         $form->addPassword('newPassword2', 'Kontrola')
             ->setRequired(FALSE)
-            ->addConditionOn($form['newPassword1'], Form::FILLED)
+            ->addConditionOn($form['newPassword1'], Form::Filled)
                 ->addRule(Form::EQUAL, 'Hesla se neshodují', $form['newPassword1']);
 
         $form->addSubmit('send', 'Uložit');
@@ -87,7 +82,7 @@ final class SettingPresenter extends BasePresenter
         $this->userManager->update($this->user->identity->id, $values);
         $userData = $this->userManager->get($this->getUser()->getIdentity()->getId());
 
-        $this->user->login(new Identity($userData->user_id, NULL, $userData->toArray()));
+        $this->getUser()->login(new SimpleIdentity($userData->user_id, NULL, $userData->toArray()));
 
         $form->addError('Údaje změněny');
     }
