@@ -2,7 +2,7 @@
 
 namespace App\Presenters;
 
-use App\Model\UserManager;
+use App\Core\UserManager;
 use Nette\Application\UI\Form;
 use Nette\Security\SimpleIdentity;
 use Nette\Utils\ArrayHash;

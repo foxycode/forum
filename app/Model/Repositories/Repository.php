@@ -1,22 +1,14 @@
 <?php declare(strict_types=1);
 
-namespace App\Model;
+namespace App\Model\Repositories;
 
-use Nette;
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 
 abstract class Repository
 {
-    use Nette\SmartObject;
-
-    /**
-     * @var Context
-     */
-    protected $database;
-
-    public function __construct(Context $database)
-    {
-        $this->database = $database;
+    public function __construct(
+        protected readonly Explorer $database,
+    ) {
     }
 
     public function begin(): void

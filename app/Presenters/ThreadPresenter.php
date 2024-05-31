@@ -2,8 +2,8 @@
 
 namespace App\Presenters;
 
-use App\Model\MessageRepository;
-use App\Model\ThreadRepository;
+use App\Model\Repositories\MessageRepository;
+use App\Model\Repositories\ThreadRepository;
 use Nette\Application\AbortException;
 use Nette\Application\BadRequestException;
 use Nette\Application\UI\Form;

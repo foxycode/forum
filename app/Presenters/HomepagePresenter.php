@@ -2,7 +2,7 @@
 
 namespace App\Presenters;
 
-use App\Model\ThreadRepository;
+use App\Model\Repositories\ThreadRepository;
 
 final class HomepagePresenter extends BasePresenter
 {

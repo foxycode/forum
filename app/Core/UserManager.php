@@ -1,28 +1,20 @@
 <?php declare(strict_types=1);
 
-namespace App\Model;
+namespace App\Core;
 
-use Nette\Database\Context;
+use Nette\Database\Explorer;
 use Nette\Database\Table\ActiveRow;
 use Nette\Security\AuthenticationException;
 use Nette\Security\IAuthenticator;
 use Nette\Security\Identity;
 use Nette\Security\IIdentity;
-use Nette\SmartObject;
 use Nette\Utils\ArrayHash;
 
-final class UserManager implements IAuthenticator
+final readonly class UserManager implements IAuthenticator
 {
-    use SmartObject;
-
-    /**
-     * @var Context
-     */
-    private $database;
-
-    public function __construct(Context $database)
-    {
-        $this->database = $database;
+    public function __construct(
+        private Explorer $database
+    ) {
     }
 
     /**

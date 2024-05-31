@@ -15,10 +15,10 @@ final class Bootstrap
             $configurator->setDebugMode(TRUE);
         }
 
-        $configurator->enableTracy($appDir . '/log');
+        $configurator->enableTracy($appDir . '/var/log');
         setlocale(LC_ALL, 'cs_CZ.utf8');
         $configurator->setTimeZone('Europe/Prague');
-        $configurator->setTempDirectory($appDir . '/temp');
+        $configurator->setTempDirectory($appDir . '/var/temp');
 
         $configurator->addConfig($appDir . '/config/common.neon');
         $configurator->addConfig($appDir . '/config/local.neon');

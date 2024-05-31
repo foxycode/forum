@@ -1,7 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace App\Model;
+namespace App\Model\Repositories;
 
+use DateTimeImmutable;
 use Nette\Database\ResultSet;
 use Nette\Database\Row;
 use Nette\Utils\ArrayHash;
@@ -20,7 +21,7 @@ final class ThreadRepository extends Repository
             LIMIT 1
         ");
 
-        return $result->fetch() ?: NULL;
+        return $result->fetch() ?: null;
     }
 
     public function getLast(int $userId, string $sortBy, int $perPage): ResultSet
@@ -43,7 +44,7 @@ final class ThreadRepository extends Repository
 
     public function search(?string $query, string $sortBy, int $perPage): ?ResultSet
     {
-        $result = NULL;
+        $result = null;
 
         if ($query) {
             $query = trim($this->database->getConnection()->quote($query), "'");
@@ -69,7 +70,7 @@ final class ThreadRepository extends Repository
 
     public function add(ArrayHash $data): int
     {
-        $time = new \DateTime;
+        $time = new DateTimeImmutable();
         $thread = $this->database->table('thread')->insert([
             'submiter_id' => $data->submiter_id,
             'subject' => stripslashes($data->subject),
@@ -95,7 +96,7 @@ final class ThreadRepository extends Repository
 
         $thread = $this->database->table('thread')->get($data->thread_id);
         $thread->update([
-            'last_reply_time' => new \DateTime,
+            'last_reply_time' => new DateTimeImmutable(),
             'last_reply_by' => $data->submiter_id,
             'replies_count' => $thread->replies_count + 1,
         ]);

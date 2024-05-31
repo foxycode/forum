@@ -11,6 +11,7 @@ session:
 
 services:
     - App\Core\RouterFactory::createRouter
+    - App\Core\UserManager
 
 search:
-    - in: %appDir%/Model
+    - in: %appDir%/Model/Repositories
