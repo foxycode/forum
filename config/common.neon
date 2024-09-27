@@ -14,4 +14,7 @@ services:
     - App\Core\UserManager
 
 search:
+    - in: %appDir%/Forms
+      classes:
+          - *Factory
     - in: %appDir%/Model/Repositories

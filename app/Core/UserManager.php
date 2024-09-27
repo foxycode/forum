@@ -41,22 +41,18 @@ final readonly class UserManager implements IAuthenticator
             ->where('user_id', $row->user_id)
             ->update(['last_login' => new \DateTime]);
 
-        return new Identity($row['user_id'], NULL, $row->toArray());
+        return new Identity($row['user_id'], null, $row->toArray());
     }
 
     public function get(int $userId): ?ActiveRow
     {
-        return $this->database->table('user')->where('user_id', $userId)->fetch() ?: NULL;
+        return $this->database->table('user')->where('user_id', $userId)->fetch() ?: null;
     }
 
-    public function update(int $id, ArrayHash $values): void
+    public function update(int $id, array $values): void
     {
-        foreach (['mail', 'icq', 'jabber'] as $nullItem) {
-            if ($values->{$nullItem} === '') {
-                $values->{$nullItem} = NULL;
-            }
-        }
-
-        $this->database->table('user')->where('user_id', $id)->update($values);
+        $this->database->table('user')
+            ->where('user_id', $id)
+            ->update($values);
     }
 }

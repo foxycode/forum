@@ -3,104 +3,65 @@
 namespace App\Presenters;
 
 use App\Core\UserManager;
+use App\Forms\UserPasswordFormFactory;
+use App\Forms\UserSettingsFormFactory;
 use Nette\Application\UI\Form;
-use Nette\Forms\Form as FormRule;
 use Nette\Security\SimpleIdentity;
 use Nette\Utils\ArrayHash;
 
+/**
+ * @property-read SettingsTemplate $template
+ */
 final class SettingPresenter extends BasePresenter
 {
-    private const array PerPageOptions = [
-        25 => 25,
-        50 => 50,
-        75 => 75,
-        100 => 100,
-        125 => 125,
-        150 => 150,
-        175 => 175,
-        200 => 200,
-    ];
-
-    private const array SortByOptions = [
-        'last_reply_time' => 'Času poslední odpovědi',
-        'create_time' => 'Času vytvoření',
-    ];
-
-    private const array StyleOptions = [
-        'forum.css' => 'Světle modrý',
-        'forum_d.css' => 'Tmavě modrý',
-        'forum_b.css' => 'Černý',
-    ];
-
     public function __construct(
+        private readonly UserPasswordFormFactory $userPasswordFormFactory,
+        private readonly UserSettingsFormFactory $userSettingsFormFactory,
         private readonly UserManager $userManager,
     ) {
         parent::__construct();
     }
 
-    protected function createComponentUserForm(): Form
+    public function renderDefault(): void
     {
-        $form = new Form();
+        $this->template->nick = $this->getUser()->getIdentity()->nick;
+    }
 
-        $form->addSelect('perpage', 'Počet příspěvků', self::PerPageOptions)
-            ->addRule(FormRule::Filled, 'Je nutné vybrat počet příspěvků');
-
-        $form->addSelect('sortby', 'Řadit podle', self::SortByOptions)
-            ->addRule(FormRule::Filled, 'Je nutné vybrat řazení');
-
-        $form->addPassword('oldPassword', 'Staré heslo')
-            ->setRequired('Je nutné zadat staré heslo')
-            ->addRule(
-                fn ($item, $arg) => md5($item->value) == $arg,
-                'Je nutné zadat platné heslo',
-                $this->getUser()->getIdentity()->data['password']
-            );
-
-        $form->addSelect('style', 'Vzhled', self::StyleOptions)
-            ->addRule(FormRule::Filled, 'Je nutné vybrat vzhled');
-
-        $form->addText('mail', 'E-mail')
-            ->addCondition(FormRule::Filled)
-                ->addRule(FormRule::Email, 'Musí jít o platný e-mail');
-
-        $form->addText('icq', 'ICQ');
-
-        $form->addText('jabber', 'Jabber');
-
-        $form->addPassword('newPassword1', 'Nové heslo');
-
-        $form->addPassword('newPassword2', 'Kontrola')
-            ->setRequired(false)
-            ->addConditionOn($form['newPassword1'], FormRule::Filled)
-                ->addRule(FormRule::Equal, 'Hesla se neshodují', $form['newPassword1']);
-
-        $form->addSubmit('send', 'Uložit');
-
-        $form->setDefaults($this->getUser()->getIdentity()->data);
-
-        $form->onSuccess[] = $this->userFormSuccess(...);
+    protected function createComponentPasswordForm(): Form
+    {
+        $form = $this->userPasswordFormFactory->create($this->getUser());
+        $form->onSuccess[] = $this->passwordFormSuccess(...);
 
         return $form;
     }
 
-    public function userFormSuccess(Form $form, ArrayHash $values): void
+    protected function createComponentSettingsForm(): Form
     {
-        unset($values->oldPassword);
-        if ($values->newPassword1) {
-            $values->password = md5($values->newPassword1);
-        }
-        unset($values->newPassword1, $values->newPassword2);
+        $form = $this->userSettingsFormFactory->create($this->getUser());
+        $form->onSuccess[] = $this->settingsFormSuccess(...);
 
-        $this->userManager->update($this->user->identity->id, $values);
-        $userData = $this->userManager->get($this->getUser()->getIdentity()->getId());
-
-        $this->getUser()->login(new SimpleIdentity($userData->user_id, NULL, $userData->toArray()));
-
-        $form->addError('Údaje změněny');
+        return $form;
     }
 
-    public function renderDefault(): void
+    private function passwordFormSuccess(Form $form, ArrayHash $values): void
     {
-        $this->template->nick = $this->getUser()->getIdentity()->nick;
+        $this->userManager->update($this->getUser()->getId(), [
+            'password' => md5($values->newPassword1),
+        ]);
+
+        $userData = $this->userManager->get($this->getUser()->getId());
+        $this->getUser()->login(new SimpleIdentity($userData->user_id, null, $userData->toArray()));
+
+        $form->addError('Heslo změněno');
+    }
+
+    private function settingsFormSuccess(Form $form, ArrayHash $values): void
+    {
+        $this->userManager->update($this->getUser()->getId(), (array) $values);
+
+        $userData = $this->userManager->get($this->getUser()->getId());
+        $this->getUser()->login(new SimpleIdentity($userData->user_id, null, $userData->toArray()));
+
+        $form->addError('Nastavení změněna');
     }
 }

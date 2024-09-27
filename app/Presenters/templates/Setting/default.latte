@@ -2,8 +2,13 @@
 
 {block content}
     <nav>
-        {if $presenter['userForm']->hasErrors()}
-            {foreach $presenter['userForm']->errors as $error}
+        {if $presenter['passwordForm']->hasErrors()}
+            {foreach $presenter['passwordForm']->errors as $error}
+                <b>{$error}</b> |
+            {/foreach}
+        {/if}
+        {if $presenter['settingsForm']->hasErrors()}
+            {foreach $presenter['settingsForm']->errors as $error}
                 <b>{$error}</b> |
             {/foreach}
         {/if}
@@ -12,14 +17,14 @@
 
     <hr>
 
-    <form n:name="userForm" novalidate>
+    <form n:name="settingsForm" novalidate>
         <table>
             <tr>
                 <td><strong>Přezdívka:</strong></td>
                 <td>{$nick}</td>
             </tr>
             <tr>
-                <td><strong>Počet příspěvků:</strong></td>
+                <td><strong>Příspěvků na stránku:</strong></td>
                 <td>
                     {input perpage}
                 </td>
@@ -28,12 +33,6 @@
                 <td><strong>Řadit podle:</strong></td>
                 <td>
                     {input sortby}
-                </td>
-            </tr>
-            <tr>
-                <td style="vertical-align:top"><strong>Staré heslo:</strong></td>
-                <td>
-                    {input oldPassword size => 40, class => 'input'} (nutné pro změnu údajů)
                 </td>
             </tr>
             <tr>
@@ -58,6 +57,25 @@
                 <td><strong>Jabber:</strong></td>
                 <td>
                     {input jabber size => 40, class => 'input'}
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    {input send}
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <hr>
+
+    <form n:name="passwordForm" novalidate>
+        <table>
+            <tr>
+                <td style="vertical-align:top"><strong>Staré heslo:</strong></td>
+                <td>
+                    {input oldPassword size => 40, class => 'input'}
                 </td>
             </tr>
             <tr>
